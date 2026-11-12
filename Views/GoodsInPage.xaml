@@ -1,19 +1,161 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SiteSyncTracker.Views.GoodsInPage" Title="Goods In">
-    <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
-            <Label Text="Receive Delivery" FontSize="26" FontAttributes="Bold" />
-            <Entry x:Name="ManifestEntry" Placeholder="Manifest number" MaxLength="50" />
-            <Editor x:Name="DescriptionEntry" Placeholder="What was delivered?" MaxLength="255" HeightRequest="96" />
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                <Entry x:Name="ExpectedEntry" Placeholder="Qty expected" Keyboard="Numeric" />
-                <Entry x:Name="ReceivedEntry" Grid.Column="1" Placeholder="Qty received" Keyboard="Numeric" />
-            </Grid>
-            <Picker x:Name="LocationPicker" Title="Select location" ItemDisplayBinding="{Binding ZoneName}" />
-            <Picker x:Name="StatusPicker" Title="Select status" ItemDisplayBinding="{Binding StatusName}" />
-            <Entry x:Name="NotifyEntry" Placeholder="Notification email or phone" MaxLength="255" />
-            <Button Text="Confirm Receipt" Clicked="OnConfirmReceiptClicked" BackgroundColor="{StaticResource StatusGreen}" TextColor="White" />
-        </VerticalStackLayout>
-    </ScrollView>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SiteSyncTracker.Views.GoodsInPage"
+             Title="Goods In"
+             BackgroundColor="#F7F7F7">
+
+    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="#F7F7F7">
+        <!-- Header with Back Affordance -->
+        <Grid Grid.Row="0" Padding="14,10,16,10" ColumnDefinitions="Auto,*" BackgroundColor="White">
+            <Button Text="← Back"
+                    Clicked="OnBackClicked"
+                    BackgroundColor="Transparent"
+                    TextColor="#1565C0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    BorderWidth="0"
+                    Padding="4,0"
+                    SemanticProperties.Description="Back to Dashboard" />
+            <Label Grid.Column="1"
+                   Text="Goods In (Receive Delivery)"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#1F1F1F"
+                   VerticalOptions="Center"
+                   Margin="8,0,0,0" />
+        </Grid>
+        <BoxView Grid.Row="0" VerticalOptions="End" HeightRequest="1" Color="#E0E0E0" />
+
+        <!-- Form ScrollView -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="18,16" Spacing="16">
+                <Border Padding="16" BackgroundColor="White" StrokeThickness="1" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Delivery Details" FontSize="18" FontAttributes="Bold" TextColor="#1F1F1F" />
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Manifest Number *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                            <Entry x:Name="ManifestEntry"
+                                   Placeholder="e.g. MAN-1043"
+                                   MaxLength="50"
+                                   HeightRequest="48"
+                                   SemanticProperties.Hint="Enter manifest number" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Item Description *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                            <Editor x:Name="DescriptionEntry"
+                                    Placeholder="What materials were delivered?"
+                                    MaxLength="255"
+                                    HeightRequest="80"
+                                    SemanticProperties.Hint="Enter description of delivered items" />
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Qty Expected *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                                <Entry x:Name="ExpectedEntry"
+                                       Placeholder="0"
+                                       Keyboard="Numeric"
+                                       HeightRequest="48"
+                                       SemanticProperties.Hint="Enter expected quantity" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                <Label Text="Qty Received *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                                <Entry x:Name="ReceivedEntry"
+                                       Placeholder="0"
+                                       Keyboard="Numeric"
+                                       HeightRequest="48"
+                                       SemanticProperties.Hint="Enter received quantity" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Storage Location *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                            <Picker x:Name="LocationPicker"
+                                    Title="Select drop-off zone"
+                                    ItemDisplayBinding="{Binding ZoneName}"
+                                    HeightRequest="48"
+                                    SemanticProperties.Hint="Choose delivery storage location" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Initial Status *" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                            <Picker x:Name="StatusPicker"
+                                    Title="Select status"
+                                    ItemDisplayBinding="{Binding StatusName}"
+                                    HeightRequest="48"
+                                    SemanticProperties.Hint="Choose initial status" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Notification Contact (Optional)" FontSize="14" FontAttributes="Bold" TextColor="#424242" />
+                            <Entry x:Name="NotifyEntry"
+                                   Placeholder="Email or phone to notify"
+                                   MaxLength="255"
+                                   HeightRequest="48"
+                                   SemanticProperties.Hint="Optional notification recipient" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Action Button -->
+                <Button Text="Confirm Delivery Receipt"
+                        HeightRequest="56"
+                        FontSize="17"
+                        FontAttributes="Bold"
+                        Clicked="OnConfirmReceiptClicked"
+                        BackgroundColor="#1F8C48"
+                        TextColor="White"
+                        CornerRadius="12"
+                        SemanticProperties.Description="Confirm Delivery Receipt"
+                        SemanticProperties.Hint="Saves the delivery to site inventory" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation Bar -->
+        <Grid Grid.Row="2"
+              Padding="10,10,10,14"
+              ColumnDefinitions="*,*,*,*"
+              BackgroundColor="White">
+            <BoxView VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="4" Color="#E5E5E5" Margin="0,-10,0,0" />
+
+            <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Dashboard Tab. Tap to navigate to Dashboard.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDashboardNavClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Dashboard" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Goods In Tab. Selected.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGoodsInNavClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#D61B7A" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Goods In" FontSize="13" FontAttributes="Bold" TextColor="#D61B7A" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Goods Out Tab. Tap to navigate to Issue Materials.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGoodsOutNavClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Goods Out" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Inventory Tab. Tap to navigate to Inventory search.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnInventoryNavClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Inventory" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

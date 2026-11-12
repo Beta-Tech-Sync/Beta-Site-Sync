@@ -21,12 +21,11 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 37
     buildToolsVersion build_tools_version
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles 'consumer-rules.pro'
         javaCompileOptions {
@@ -57,9 +56,6 @@ android {
         }
     }
 
-    lintOptions {
-        lintConfig file('../lint.xml')
-    }
 
     testOptions {
         unitTests.all {
@@ -68,6 +64,12 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+        targetSdk 33
+    }
+    namespace 'com.example.android.trackr.shared'
+    lint {
+        lintConfig file('../lint.xml')
+        targetSdk 33
     }
 }
 

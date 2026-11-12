@@ -26,7 +26,10 @@ data class InventoryItem(
     val id: Long = 0,
     val name: String,
     val quantity: Int = 0,
-    val category: String = "General",
+    val category: String = "Building Materials",
     val description: String = "",
+    val manifestNumber: String = "",
+    val location: String = "Main Laydown Yard",
+    val status: String = "Delivered to Yard",
     val updatedAt: Instant = Instant.now()
 )

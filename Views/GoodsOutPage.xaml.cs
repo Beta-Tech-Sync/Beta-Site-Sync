@@ -7,19 +7,46 @@ public partial class GoodsOutPage : ContentPage
 {
     private readonly InventoryService _inventoryService;
 
-    public GoodsOutPage()
+    public GoodsOutPage(InventoryService? inventoryService = null)
     {
         InitializeComponent();
-        _inventoryService = Application.Current?.Handler?.MauiContext?.Services.GetService<InventoryService>()
-            ?? throw new InvalidOperationException("Inventory services are not initialized.");
+        _inventoryService = inventoryService
+            ?? IPlatformApplication.Current?.Services?.GetService<InventoryService>()
+            ?? Application.Current?.Handler?.MauiContext?.Services?.GetService<InventoryService>()
+            ?? new InventoryService(null!);
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        LocationPicker.ItemsSource = (await _inventoryService.GetLocationsAsync()).ToList();
-        StatusPicker.ItemsSource = (await _inventoryService.GetStatusesAsync()).ToList();
+        try
+        {
+            LocationPicker.ItemsSource = (await _inventoryService.GetLocationsAsync()).ToList();
+            StatusPicker.ItemsSource = (await _inventoryService.GetStatusesAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to load locations/statuses: {ex.Message}");
+        }
     }
+
+    private async Task NavigateToAsync(string route)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync(route);
+        }
+        catch
+        {
+            await Shell.Current.GoToAsync($"//{route}");
+        }
+    }
+
+    private async void OnBackClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(MainPage));
+    private async void OnDashboardNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(MainPage));
+    private async void OnGoodsInNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(GoodsInPage));
+    private async void OnGoodsOutNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(GoodsOutPage));
+    private async void OnInventoryNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(InventoryPage));
 
     private async void OnConfirmIssueClicked(object? sender, EventArgs e)
     {
@@ -31,29 +58,37 @@ public partial class GoodsOutPage : ContentPage
             return;
         }
 
-        var item = (await _inventoryService.GetItemsAsync(ManifestEntry.Text.Trim()))
-            .FirstOrDefault(inventoryItem => inventoryItem.ManifestNumber.Equals(ManifestEntry.Text.Trim(), StringComparison.OrdinalIgnoreCase));
-
-        if (item is null)
+        try
         {
-            await DisplayAlertAsync("Not found", "No inventory item matches that manifest.", "OK");
-            return;
-        }
+            var item = (await _inventoryService.GetItemsAsync(ManifestEntry.Text.Trim()))
+                .FirstOrDefault(inventoryItem => inventoryItem.ManifestNumber.Equals(ManifestEntry.Text.Trim(), StringComparison.OrdinalIgnoreCase));
 
-        if (quantity > item.QuantityReceived)
+            if (item is null)
+            {
+                await DisplayAlertAsync("Not found", "No inventory item matches that manifest.", "OK");
+                return;
+            }
+
+            if (quantity > item.QuantityReceived)
+            {
+                await DisplayAlertAsync("Validation", "Quantity out cannot exceed quantity received.", "OK");
+                return;
+            }
+
+            item.QuantityReceived -= quantity;
+            item.CurrentLocationId = location.Id;
+            item.CurrentLocation = location;
+            item.CurrentStatusId = status.Id;
+            item.CurrentStatus = status;
+            await _inventoryService.UpdateAsync(item);
+
+            ManifestEntry.Text = QuantityEntry.Text = string.Empty;
+            await DisplayAlertAsync("Saved", "The material issue was recorded.", "OK");
+            await NavigateToAsync(nameof(InventoryPage));
+        }
+        catch (Exception ex)
         {
-            await DisplayAlertAsync("Validation", "Quantity out cannot exceed quantity received.", "OK");
-            return;
+            await DisplayAlertAsync("Error", $"Could not record material issue: {ex.Message}", "OK");
         }
-
-        item.QuantityReceived -= quantity;
-        item.CurrentLocationId = location.Id;
-        item.CurrentLocation = location;
-        item.CurrentStatusId = status.Id;
-        item.CurrentStatus = status;
-        await _inventoryService.UpdateAsync(item);
-
-        ManifestEntry.Text = QuantityEntry.Text = string.Empty;
-        await DisplayAlertAsync("Saved", "The material issue was recorded.", "OK");
     }
 }

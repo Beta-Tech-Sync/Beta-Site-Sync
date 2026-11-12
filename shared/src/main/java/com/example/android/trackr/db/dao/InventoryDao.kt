@@ -30,6 +30,9 @@ interface InventoryDao {
     @Query("SELECT * FROM inventory_items ORDER BY name ASC")
     fun observeInventoryItems(): Flow<List<InventoryItem>>
 
+    @Query("SELECT * FROM inventory_items WHERE (:category IS NULL OR category = :category) ORDER BY name ASC")
+    fun observeInventoryItemsByCategory(category: String?): Flow<List<InventoryItem>>
+
     @Query("SELECT * FROM inventory_items WHERE id = :id")
     suspend fun getInventoryItemById(id: Long): InventoryItem?
 

@@ -2,9 +2,9 @@ name: SiteSync CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -172,3 +172,5 @@ jobs:
             adb shell dumpsys activity activities | grep -A 8 com.companyname.sitesynctracker || true
             adb shell pidof com.companyname.sitesynctracker
             adb logcat -d -t 300
+
+

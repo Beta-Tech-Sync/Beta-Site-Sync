@@ -16,13 +16,13 @@
 
 package com.example.android.trackr.compose.ui.tasks
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -42,7 +42,6 @@ import com.example.android.trackr.compose.R
 import com.example.android.trackr.compose.ui.TrackrTheme
 import com.example.android.trackr.data.TaskStatus
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun TaskStatusHeader(
     status: TaskStatus,
@@ -53,13 +52,15 @@ internal fun TaskStatusHeader(
 ) {
     Surface(
         color = MaterialTheme.colors.primarySurface,
-        onClick = onClick,
-        onClickLabel = stringResource(
-            if (expanded) {
-                R.string.collapse_tasks
-            } else {
-                R.string.expand_tasks
-            }
+        modifier = Modifier.clickable(
+            onClickLabel = stringResource(
+                if (expanded) {
+                    R.string.collapse_tasks
+                } else {
+                    R.string.expand_tasks
+                }
+            ),
+            onClick = onClick
         )
     ) {
         Row(

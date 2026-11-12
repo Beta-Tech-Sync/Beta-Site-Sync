@@ -17,11 +17,12 @@
 package com.example.android.trackr.compose.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.android.trackr.compose.ui.detail.TaskDetail
 import com.example.android.trackr.compose.ui.detail.TaskDetailViewModel
@@ -37,7 +38,7 @@ fun Main() {
                 navController = navController,
                 startDestination = "tasks",
             ) {
-                composable("tasks") {
+                composable("tasks", content = {
                     Tasks(
                         hiltViewModel(),
                         onTaskClick = { taskId ->
@@ -53,9 +54,11 @@ fun Main() {
                             // TODO
                         }
                     )
-                }
+                })
                 composable(
-                    route = "detail/{taskId}",
+                    route = buildString {
+        append("detail/{taskId}")
+    },
                     arguments = listOf(navArgument("taskId") { type = NavType.LongType })
                 ) { backStackEntry ->
                     TaskDetail(
@@ -66,5 +69,13 @@ fun Main() {
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewMain() {
+    TrackrTheme {
+        Main()
     }
 }

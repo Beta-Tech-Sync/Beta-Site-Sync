@@ -13,7 +13,7 @@ each task.  Users can archive a task by swiping right and they can modify a
 task's priority by dragging it up or down.
 
 Developers are encouraged to explore Trackr using an accessibility service
-like [Talkback](https://support.google.com/accessibility/android/answer/6283677?hl=en) or
+like [TalkBack](https://support.google.com/accessibility/android/answer/6283677?hl=en) or
 [Switch Access](https://support.google.com/accessibility/android/answer/6122836?hl=en);
 developers are also encouraged to try out the various accessibility settings
 found on their devices (see Settings > Accessibility on most Android phones)
@@ -28,20 +28,16 @@ the swipe gesture to archive an item or drag and drop items to reorder their
 priority, they should nonetheless be able to access the archive and reorder
 functionality through the accessibility service they are using.
 
-
 APIs showcased
 ---------------------------
+
 The following accessibility APIs (non-exhaustive list) are showcased in this sample:
 
-[ViewCompat#addAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#addAccessibilityAction(android.view.View,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): to surface functionality like swipe-to-archive, drag and drop, etc.
-
-[ViewCompat#performAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#performAccessibilityAction(android.view.View,%20int,%20android.os.Bundle)): used in testing.
-
-[ViewCompat#replaceAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#replaceAccessibilityAction(android.view.View,%20androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): used to customize the label associated with an action.
-
-[ViewCompat.setStateDescription()](https://developer.android.com/reference/androidx/core/view/ViewCompat#setStateDescription(android.view.View,%20java.lang.CharSequence)): used to specify state associated with a view.
-
-[AccessibilityManager#getRecommendedTimeoutMillis()](https://developer.android.com/reference/android/view/accessibility/AccessibilityManager#getRecommendedTimeoutMillis(int,%20int)): used to specify the timeout for ephemeral content.
+- [ViewCompat#addAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#addAccessibilityAction(android.view.View,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): to surface functionality like swipe-to-archive, drag and drop, etc.
+- [ViewCompat#performAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#performAccessibilityAction(android.view.View,%20int,%20android.os.Bundle)): used in testing.
+- [ViewCompat#replaceAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#replaceAccessibilityAction(android.view.View,%20androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): used to customize the label associated with an action.
+- [ViewCompat#setStateDescription()](https://developer.android.com/reference/androidx/core/view/ViewCompat#setStateDescription(android.view.View,%20java.lang.CharSequence)): used to specify state associated with a view.
+- [AccessibilityManager#getRecommendedTimeoutMillis()](https://developer.android.com/reference/android/view/accessibility/AccessibilityManager#getRecommendedTimeoutMillis(int,%20int)): used to specify the timeout for ephemeral content.
 
 Getting Started
 -------------------------
@@ -61,7 +57,7 @@ Screenshots
 
 |Home Screen TalkBack|Detail|Edit|
 |:--:|:--:|:--:|
-|<img src="screenshots/talkback_home.png" alt="Home Screen TalkBack" title="Task list screen with TalkBack on" width="240px">|<img src="screenshots/detail_dark.png" alt="Detail" title="Detail screen in dark mode" width="240px">|<img src="screenshots/edit.png" alt="Edit" title="Task edit screen" width="240px">|
+|<img src="screenshots/talkback_home.png" alt="Home Screen TalkBack" title="Task list screen with TalkBack on" width="240">|<img src="screenshots/detail_dark.png" alt="Detail" title="Detail screen in dark mode" width="240">|<img src="screenshots/edit.png" alt="Edit" title="Task edit screen" width="240">|
 
 Issues
 -----------
@@ -90,7 +86,7 @@ file to you under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License.  You may obtain a copy of
 the License at
 
- http://www.apache.org/licenses/LICENSE-2.0
+<https://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS, WITHOUT

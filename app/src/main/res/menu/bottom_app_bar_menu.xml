@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2021 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +13,22 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
--->
+  -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/archive"
+        android:id="@+id/nav_archives"
         android:contentDescription="@string/archive"
         android:title="@string/archive" />
     <item
-        android:id="@+id/settings"
+        android:id="@+id/nav_inventory"
+        android:contentDescription="@string/inventory"
+        android:title="@string/inventory" />
+    <item
+        android:id="@+id/nav_expenses"
+        android:contentDescription="@string/expenses"
+        android:title="@string/expenses" />
+    <item
+        android:id="@+id/nav_settings"
         android:contentDescription="@string/settings"
         android:title="@string/settings" />
 </menu>

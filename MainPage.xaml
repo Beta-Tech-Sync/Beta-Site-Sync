@@ -3,134 +3,242 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SiteSyncTracker.MainPage"
              Title="Dashboard"
-             BackgroundColor="#f2f2f2">
+             BackgroundColor="#F7F7F7">
 
-    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="#f2f2f2">
-        <Grid Grid.Row="0" Padding="16,10,16,0" ColumnDefinitions="*,Auto">
-            <Label Text="9:41" FontSize="22" FontAttributes="Bold" Margin="0,0,0,4" />
-            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
-                <Border WidthRequest="14" HeightRequest="10" Padding="0" StrokeThickness="0" BackgroundColor="#2E2E2E" StrokeShape="RoundRectangle 2" />
-                <Border WidthRequest="14" HeightRequest="10" Padding="0" StrokeThickness="0" BackgroundColor="#2E2E2E" StrokeShape="RoundRectangle 2" />
-                <Border WidthRequest="14" HeightRequest="10" Padding="0" StrokeThickness="0" BackgroundColor="#2E2E2E" StrokeShape="RoundRectangle 2" />
-                <Border WidthRequest="18" HeightRequest="12" Padding="0" StrokeThickness="1.5" Stroke="#2E2E2E" BackgroundColor="Transparent" StrokeShape="RoundRectangle 2" />
-                <BoxView WidthRequest="16" HeightRequest="12" Color="Transparent" />
-            </HorizontalStackLayout>
+    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="#F7F7F7">
+        <!-- App Header (Native App Bar replacement for mock status bar) -->
+        <Grid Grid.Row="0" Padding="18,14,18,12" ColumnDefinitions="*,Auto" BackgroundColor="White">
+            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                <Label Text="SiteSync Tracker"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="#1F1F1F"
+                       SemanticProperties.HeadingLevel="Level1" />
+                <Label Text="Main Laydown Yard • Active Project"
+                       FontSize="13"
+                       TextColor="#666666" />
+            </VerticalStackLayout>
+            <Border Grid.Column="1"
+                    Padding="12,6"
+                    StrokeThickness="0"
+                    BackgroundColor="#E8F5E9"
+                    StrokeShape="RoundRectangle 16"
+                    VerticalOptions="Center"
+                    SemanticProperties.Description="Sync Status: Real-time synced with cloud">
+                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                    <Ellipse Fill="#2E7D32" WidthRequest="8" HeightRequest="8" VerticalOptions="Center" />
+                    <Label Text="Synced" FontSize="13" FontAttributes="Bold" TextColor="#2E7D32" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
         </Grid>
 
-        <BoxView Grid.Row="0" VerticalOptions="End" HeightRequest="2" Margin="0,0,0,0" Color="#D5D5D5" />
+        <BoxView Grid.Row="0" VerticalOptions="End" HeightRequest="1" Color="#E0E0E0" />
 
+        <!-- Main Scrollable Content -->
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="18,8,18,12" Spacing="18">
-                <Label Text="Dashboard"
-                       FontSize="32"
-                       FontAttributes="Bold"
-                       Margin="0,12,0,0"
-                       SemanticProperties.HeadingLevel="Level1" />
-
+            <VerticalStackLayout Padding="18,16,18,20" Spacing="20">
+                <!-- Site Overview Section -->
                 <Label Text="Site Overview"
-                       FontSize="36"
+                       FontSize="26"
                        FontAttributes="Bold"
-                       Margin="0,4,0,0"
+                       TextColor="#1F1F1F"
                        SemanticProperties.HeadingLevel="Level2" />
 
-                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="14" RowSpacing="14">
-                    <Border Grid.Row="0" Grid.Column="0" Padding="16,18" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#B7782D">
+                <!-- Status Cards Grid (Interactive) -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Padding="16,16"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#B7782D"
+                            SemanticProperties.Description="12 items in transit. Tap to view in inventory.">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnStatusCardTapped" />
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="12" FontSize="54" FontAttributes="Bold" TextColor="White" SemanticProperties.HeadingLevel="Level3" />
-                            <Label Text="In Transit" FontSize="20" TextColor="White" />
+                            <Label Text="12" FontSize="44" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="In Transit" FontSize="16" FontAttributes="Bold" TextColor="White" />
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="0" Grid.Column="1" Padding="16,18" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#1E78B8">
+                    <Border Grid.Row="0" Grid.Column="1"
+                            Padding="16,16"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#1E78B8"
+                            SemanticProperties.Description="48 items delivered to yard. Tap to view in inventory.">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnStatusCardTapped" />
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="48" FontSize="54" FontAttributes="Bold" TextColor="White" SemanticProperties.HeadingLevel="Level3" />
-                            <Label Text="Delivered to Yard" FontSize="20" TextColor="White" />
+                            <Label Text="48" FontSize="44" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Delivered to Yard" FontSize="16" FontAttributes="Bold" TextColor="White" />
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="0" Padding="16,18" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#E8551A">
+                    <Border Grid.Row="1" Grid.Column="0"
+                            Padding="16,16"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#E8551A"
+                            SemanticProperties.Description="21 items staged on level. Tap to view in inventory.">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnStatusCardTapped" />
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="21" FontSize="54" FontAttributes="Bold" TextColor="White" SemanticProperties.HeadingLevel="Level3" />
-                            <Label Text="Staged on Level" FontSize="20" TextColor="White" />
+                            <Label Text="21" FontSize="44" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Staged on Level" FontSize="16" FontAttributes="Bold" TextColor="White" />
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="1" Padding="16,18" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#1D8F4D">
+                    <Border Grid.Row="1" Grid.Column="1"
+                            Padding="16,16"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#1D8F4D"
+                            SemanticProperties.Description="95 items installed. Tap to view in inventory.">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnStatusCardTapped" />
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="95" FontSize="54" FontAttributes="Bold" TextColor="White" SemanticProperties.HeadingLevel="Level3" />
-                            <Label Text="Installed" FontSize="20" TextColor="White" />
+                            <Label Text="95" FontSize="44" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Installed" FontSize="16" FontAttributes="Bold" TextColor="White" />
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
 
+                <!-- Quick Actions Section -->
                 <Label Text="Quick Actions"
-                       FontSize="30"
+                       FontSize="24"
                        FontAttributes="Bold"
+                       TextColor="#1F1F1F"
                        Margin="0,8,0,0"
                        SemanticProperties.HeadingLevel="Level2" />
 
-                <Button Text="Goods In (Receive)"
-                        HeightRequest="72"
-                        FontSize="26"
+                <!-- Action Button 1: Goods In -->
+                <Button Text="Goods In (Receive Delivery)"
+                        HeightRequest="60"
+                        MinimumHeightRequest="56"
+                        FontSize="18"
+                        FontAttributes="Bold"
                         TextColor="White"
                         BackgroundColor="#1F8C48"
                         BorderWidth="0"
                         CornerRadius="12"
                         Clicked="OnGoodsInClicked"
-                        SemanticProperties.Hint="Opens the goods in form" />
+                        SemanticProperties.Description="Receive delivery form"
+                        SemanticProperties.Hint="Opens the goods in form to record incoming deliveries" />
 
-                <Button Text="Goods Out (Issue)"
-                        HeightRequest="72"
-                        FontSize="26"
+                <!-- Action Button 2: Goods Out -->
+                <Button Text="Goods Out (Issue Materials)"
+                        HeightRequest="60"
+                        MinimumHeightRequest="56"
+                        FontSize="18"
+                        FontAttributes="Bold"
                         TextColor="White"
                         BackgroundColor="#E5541F"
                         BorderWidth="0"
                         CornerRadius="12"
                         Clicked="OnGoodsOutClicked"
-                        SemanticProperties.Hint="Opens the goods out form" />
+                        SemanticProperties.Description="Issue materials form"
+                        SemanticProperties.Hint="Opens the goods out form to issue site materials" />
 
-                <Button Text="Scan Manifest"
-                        HeightRequest="72"
-                        FontSize="26"
+                <!-- Action Button 3: Scan Manifest / Search -->
+                <Button Text="Search &amp; Scan Manifest"
+                        HeightRequest="60"
+                        MinimumHeightRequest="56"
+                        FontSize="18"
+                        FontAttributes="Bold"
                         TextColor="White"
                         BackgroundColor="#5E3DE6"
                         BorderWidth="0"
                         CornerRadius="12"
                         Clicked="OnInventoryClicked"
-                        SemanticProperties.Hint="Opens inventory search" />
+                        SemanticProperties.Description="Search inventory"
+                        SemanticProperties.Hint="Opens the inventory search and manifest lookup" />
 
+                <!-- Recent Activity Section -->
                 <Label Text="Recent Activity"
-                       FontSize="30"
+                       FontSize="24"
                        FontAttributes="Bold"
+                       TextColor="#1F1F1F"
                        Margin="0,8,0,0"
                        SemanticProperties.HeadingLevel="Level2" />
 
-                <Border Padding="16,14" StrokeThickness="1.5" Stroke="#C9C9C9" StrokeShape="RoundRectangle 12" BackgroundColor="#F5F5F5">
+                <Border Padding="16,14"
+                        StrokeThickness="1"
+                        Stroke="#DDDDDD"
+                        StrokeShape="RoundRectangle 12"
+                        BackgroundColor="White"
+                        SemanticProperties.Description="Recent Activity: MAN-1042 Rebar bundles delivered to Main Laydown Yard">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnStatusCardTapped" />
+                    </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                        <Label Grid.Row="0" Text="MAN-1042 Rebar bundles" FontSize="18" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Text="Main Laydown Yard" FontSize="16" TextColor="#666666" />
-                        <Label Grid.RowSpan="2" Grid.Column="1" Text="Delivered" FontSize="18" VerticalOptions="Center" FontAttributes="Bold" TextColor="#1E78B8" Margin="16,0,0,0" />
+                        <Label Grid.Row="0" Text="MAN-1042 Rebar bundles" FontSize="17" FontAttributes="Bold" TextColor="#222222" />
+                        <Label Grid.Row="1" Text="Main Laydown Yard" FontSize="14" TextColor="#666666" Margin="0,2,0,0" />
+                        <Border Grid.RowSpan="2" Grid.Column="1"
+                                Padding="10,4"
+                                BackgroundColor="#E3F2FD"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 8"
+                                VerticalOptions="Center">
+                            <Label Text="Delivered"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#1565C0" />
+                        </Border>
                     </Grid>
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
 
-        <Grid Grid.Row="2" Padding="14,12,14,18" ColumnDefinitions="*,*,*,*" BackgroundColor="#F5F5F5">
-            <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="Center">
-                <Ellipse Fill="#D61B7A" WidthRequest="12" HeightRequest="12" />
-                <Label Text="Dashboard" FontSize="14" FontAttributes="Bold" TextColor="#D61B7A" HorizontalTextAlignment="Center" />
+        <!-- Interactive Bottom Navigation Bar -->
+        <Grid Grid.Row="2"
+              Padding="10,10,10,14"
+              ColumnDefinitions="*,*,*,*"
+              BackgroundColor="White">
+            <!-- Separator Line -->
+            <BoxView VerticalOptions="Start" HeightRequest="1" Grid.ColumnSpan="4" Color="#E5E5E5" Margin="0,-10,0,0" />
+
+            <!-- Tab 1: Dashboard (Active) -->
+            <VerticalStackLayout Grid.Column="0" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Dashboard Tab. Selected.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDashboardNavClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#D61B7A" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Dashboard" FontSize="13" FontAttributes="Bold" TextColor="#D61B7A" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Center">
-                <Ellipse Fill="#5A5A5A" WidthRequest="12" HeightRequest="12" />
-                <Label Text="Goods In" FontSize="14" TextColor="#4A4A4A" HorizontalTextAlignment="Center" />
+
+            <!-- Tab 2: Goods In -->
+            <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Goods In Tab. Tap to navigate to Receive Delivery.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGoodsInClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Goods In" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="2" Spacing="4" HorizontalOptions="Center">
-                <Ellipse Fill="#5A5A5A" WidthRequest="12" HeightRequest="12" />
-                <Label Text="Goods Out" FontSize="14" TextColor="#4A4A4A" HorizontalTextAlignment="Center" />
+
+            <!-- Tab 3: Goods Out -->
+            <VerticalStackLayout Grid.Column="2" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Goods Out Tab. Tap to navigate to Issue Materials.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGoodsOutClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Goods Out" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Grid.Column="3" Spacing="4" HorizontalOptions="Center">
-                <Ellipse Fill="#5A5A5A" WidthRequest="12" HeightRequest="12" />
-                <Label Text="Inventory" FontSize="14" TextColor="#4A4A4A" HorizontalTextAlignment="Center" />
+
+            <!-- Tab 4: Inventory -->
+            <VerticalStackLayout Grid.Column="3" Spacing="4" HorizontalOptions="Center" Padding="8,6"
+                                 SemanticProperties.Description="Inventory Tab. Tap to navigate to Inventory search.">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnInventoryClicked" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Ellipse Fill="#757575" WidthRequest="10" HeightRequest="10" HorizontalOptions="Center" />
+                <Label Text="Inventory" FontSize="13" TextColor="#424242" HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </Grid>
     </Grid>

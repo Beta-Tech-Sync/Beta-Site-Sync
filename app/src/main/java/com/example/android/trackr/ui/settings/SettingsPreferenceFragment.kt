@@ -33,12 +33,12 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), Preference.OnPref
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val darkModePref =
             preferenceManager.findPreference<Preference>(resources.getString(R.string.dark_mode_key))
         darkModePref?.onPreferenceChangeListener = this
 
-        return super.onCreateView(inflater, container, savedInstanceState)?.apply {
+        return super.onCreateView(inflater, container, savedInstanceState).apply {
             when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                 Configuration.UI_MODE_NIGHT_NO -> {
                     setBackgroundColor(resources.getColor(R.color.trackr_white_50, context.theme))
@@ -75,7 +75,7 @@ class SettingsPreferenceFragment : PreferenceFragmentCompat(), Preference.OnPref
         }
     }
 
-    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+    override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
         refreshDarkModePreference(newValue as String)
         return true
     }

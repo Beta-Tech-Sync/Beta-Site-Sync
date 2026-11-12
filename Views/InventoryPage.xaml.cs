@@ -6,11 +6,13 @@ public partial class InventoryPage : ContentPage
 {
     private readonly InventoryService _inventoryService;
 
-    public InventoryPage()
+    public InventoryPage(InventoryService? inventoryService = null)
     {
         InitializeComponent();
-        _inventoryService = Application.Current?.Handler?.MauiContext?.Services.GetService<InventoryService>()
-            ?? throw new InvalidOperationException("Inventory services are not initialized.");
+        _inventoryService = inventoryService
+            ?? IPlatformApplication.Current?.Services?.GetService<InventoryService>()
+            ?? Application.Current?.Handler?.MauiContext?.Services?.GetService<InventoryService>()
+            ?? new InventoryService(null!);
     }
 
     protected override async void OnAppearing()
@@ -18,6 +20,25 @@ public partial class InventoryPage : ContentPage
         base.OnAppearing();
         await LoadItemsAsync();
     }
+
+    private async Task NavigateToAsync(string route)
+    {
+        try
+        {
+            await Shell.Current.GoToAsync(route);
+        }
+        catch
+        {
+            await Shell.Current.GoToAsync($"//{route}");
+        }
+    }
+
+    private async void OnBackClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(MainPage));
+    private async void OnDashboardNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(MainPage));
+    private async void OnGoodsInNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(GoodsInPage));
+    private async void OnGoodsOutNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(GoodsOutPage));
+    private async void OnInventoryNavClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(InventoryPage));
+    private async void OnReceiveNewDeliveryClicked(object? sender, EventArgs e) => await NavigateToAsync(nameof(GoodsInPage));
 
     private async void OnSearchTextChanged(object? sender, TextChangedEventArgs e)
     {

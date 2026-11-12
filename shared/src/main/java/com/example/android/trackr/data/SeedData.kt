@@ -264,9 +264,129 @@ object SeedData {
     )
 
     val InventoryItems = listOf(
-        InventoryItem(id = 1L, name = "Laptop Pro", quantity = 15, category = "Hardware", description = "Development workstations"),
-        InventoryItem(id = 2L, name = "External Monitor 27\"", quantity = 30, category = "Hardware", description = "4K UltraHD displays"),
-        InventoryItem(id = 3L, name = "Ergonomic Mouse", quantity = 50, category = "Accessories", description = "Wireless ergonomic mice")
+        // Building Materials
+        InventoryItem(
+            id = 1L,
+            name = "Rebar Bundles (#4 Grade 60)",
+            quantity = 120,
+            category = "Building Materials",
+            manifestNumber = "MAN-1042",
+            location = "Main Laydown Yard",
+            status = "Delivered to Yard",
+            description = "High-yield deformed steel rebar for structural slabs"
+        ),
+        InventoryItem(
+            id = 2L,
+            name = "Structural Steel W12x26 Beams",
+            quantity = 45,
+            category = "Building Materials",
+            manifestNumber = "MAN-1043",
+            location = "Level 1 Structure",
+            status = "Staged on Level",
+            description = "ASTM A992 wide-flange structural steel framing members"
+        ),
+        InventoryItem(
+            id = 3L,
+            name = "Portland Cement (50kg Bags)",
+            quantity = 300,
+            category = "Building Materials",
+            manifestNumber = "MAN-1044",
+            location = "Site Warehouse",
+            status = "Delivered to Yard",
+            description = "Type I/II general purpose masonry cement"
+        ),
+        InventoryItem(
+            id = 4L,
+            name = "Concrete Masonry Units (CMU 8\")",
+            quantity = 800,
+            category = "Building Materials",
+            manifestNumber = "MAN-1045",
+            location = "Main Laydown Yard",
+            status = "In Transit",
+            description = "Standard hollow concrete block units for core walls"
+        ),
+        InventoryItem(
+            id = 5L,
+            name = "Drywall Sheets 5/8\" Type X",
+            quantity = 250,
+            category = "Building Materials",
+            manifestNumber = "MAN-1046",
+            location = "Level 2 Deck",
+            status = "Staged on Level",
+            description = "Fire-rated interior gypsum wallboards"
+        ),
+        InventoryItem(
+            id = 6L,
+            name = "Structural Plywood 3/4\" CDX",
+            quantity = 180,
+            category = "Building Materials",
+            manifestNumber = "MAN-1047",
+            location = "Main Laydown Yard",
+            status = "Delivered to Yard",
+            description = "Exterior sheathing plywood panels for formwork"
+        ),
+
+        // Consumables
+        InventoryItem(
+            id = 7L,
+            name = "Cut-Resistant Safety Gloves (L)",
+            quantity = 150,
+            category = "Consumables",
+            manifestNumber = "CON-2001",
+            location = "Tool Crib",
+            status = "Delivered to Yard",
+            description = "ANSI Cut Level A4 polyurethane coated work gloves"
+        ),
+        InventoryItem(
+            id = 8L,
+            name = "Heavy-Duty Anchor Bolts (1/2\" x 4\")",
+            quantity = 500,
+            category = "Consumables",
+            manifestNumber = "CON-2002",
+            location = "Tool Crib",
+            status = "Delivered to Yard",
+            description = "Zinc-plated wedge expansion anchors for concrete"
+        ),
+        InventoryItem(
+            id = 9L,
+            name = "Welding Rods E7018 1/8\" (50lb Box)",
+            quantity = 25,
+            category = "Consumables",
+            manifestNumber = "CON-2003",
+            location = "Site Warehouse",
+            status = "Delivered to Yard",
+            description = "Low-hydrogen stick electrodes for structural welding"
+        ),
+        InventoryItem(
+            id = 10L,
+            name = "Silicone Sealant Cartridges (10oz)",
+            quantity = 120,
+            category = "Consumables",
+            manifestNumber = "CON-2004",
+            location = "Site Warehouse",
+            status = "Delivered to Yard",
+            description = "Weatherproof architectural sealant for expansion joints"
+        ),
+        InventoryItem(
+            id = 11L,
+            name = "Marking Spray Paint (Fluorescent Orange)",
+            quantity = 80,
+            category = "Consumables",
+            manifestNumber = "CON-2005",
+            location = "Tool Crib",
+            status = "Delivered to Yard",
+            description = "Inverted tip survey and construction marking paint"
+        ),
+        InventoryItem(
+            id = 12L,
+            name = "Clear Polycarbonate Safety Glasses",
+            quantity = 200,
+            category = "Consumables",
+            manifestNumber = "CON-2006",
+            location = "Tool Crib",
+            status = "Delivered to Yard",
+            description = "Anti-scratch UV protective eye protection"
+        )
     )
 
     val Expenses = listOf(

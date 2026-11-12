@@ -35,6 +35,10 @@ class StarButton @JvmOverloads constructor(
     @VisibleForTesting
     var drawableResId = R.drawable.ic_star_border
 
+    init {
+        setChecked(_checked)
+    }
+
     override fun setChecked(checked: Boolean) {
         _checked = checked
         if (checked) {
