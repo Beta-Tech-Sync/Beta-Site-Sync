@@ -18,17 +18,16 @@ package com.example.android.trackr.db.dao
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CoroutineTestRule(
-    val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 ) : TestWatcher() {
 
     override fun starting(description: Description?) {
@@ -39,12 +38,6 @@ class CoroutineTestRule(
     override fun finished(description: Description?) {
         super.finished(description)
         Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
-    fun runBlockingTest(
-        block: suspend TestCoroutineScope.() -> Unit
-    ) = testDispatcher.runBlockingTest {
-        block()
-    }
 }
