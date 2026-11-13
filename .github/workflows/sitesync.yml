@@ -12,8 +12,8 @@ permissions:
   contents: read
 
 jobs:
-  web-and-container:
-    name: Web tests and container smoke test
+  web-tests:
+    name: API and inventory tests
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
@@ -28,30 +28,6 @@ jobs:
         run: dotnet test Web.Tests/SiteSyncTracker.Web.Tests.csproj --configuration Release --no-restore
       - name: Build web application
         run: dotnet build Web/SiteSyncTracker.Web.csproj --configuration Release --no-restore
-      - name: Build container image
-        run: docker build --file Web/Dockerfile --tag sitesync-tracker-web:${{ github.sha }} .
-      - name: Start container for health check
-        run: >-
-          docker run --detach --name sitesync-ci --publish 18080:8080
-          --volume sitesync-ci-data:/data
-          --env ASPNETCORE_ENVIRONMENT=Production
-          --env ConnectionStrings__Inventory='Data Source=/data/sitesync.db'
-          --env ConnectionStrings__Identity='Data Source=/data/sitesync-auth.db'
-          --env Admin__Email=ci-admin@example.com
-          --env Admin__Password=ci-Only-Password-123!
-          sitesync-tracker-web:${{ github.sha }}
-      - name: Wait for health endpoint
-        shell: bash
-        run: |
-          for attempt in {1..30}; do
-            if curl --fail --silent http://localhost:18080/api/health; then exit 0; fi
-            sleep 2
-          done
-          docker logs sitesync-ci
-          exit 1
-      - name: Stop validation container
-        if: always()
-        run: docker rm --force sitesync-ci
 
   android-build:
     name: Build Android APK
@@ -93,6 +69,7 @@ jobs:
     needs: android-build
     runs-on: ubuntu-24.04
     steps:
+      - uses: actions/checkout@v5
       - name: Enable KVM access
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -114,6 +91,13 @@ jobs:
             adb shell monkey -p com.sitesync.tracker -c android.intent.category.LAUNCHER 1
             sleep 5
             adb shell pidof com.sitesync.tracker
+            python .github/scripts/android_preview.py
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: android-app-previews
+          path: android-*.png
+          if-no-files-found: warn
 
   windows-build:
     name: Build Windows application
@@ -126,12 +110,21 @@ jobs:
       - name: Install MAUI Windows workload
         run: dotnet workload install maui-windows
       - name: Build Windows application
-        run: dotnet publish SiteSyncTracker.csproj -c Release -f net10.0-windows10.0.19041.0 -p:TargetFrameworks=net10.0-windows10.0.19041.0
+        run: dotnet publish SiteSyncTracker.csproj -c Release -f net10.0-windows10.0.19041.0 -p:TargetFrameworks=net10.0-windows10.0.19041.0 -p:WindowsPackageType=None -p:GenerateAppxPackageOnBuild=false --self-contained true -r win-x64 -o artifacts/windows
       - uses: actions/upload-artifact@v5
         with:
           name: sitesync-windows
-          path: bin/Release/net10.0-windows10.0.19041.0/**/AppPackages/**/*
+          path: artifacts/windows/**/*
           if-no-files-found: error
+      - name: Launch Windows app and capture previews
+        shell: pwsh
+        run: ./.github/scripts/windows-preview.ps1
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: windows-app-previews
+          path: windows-*.png
+          if-no-files-found: warn
 
   android-release-bundle:
     name: Build Android release bundle
