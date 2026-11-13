@@ -16,7 +16,7 @@ public sealed class RemoteSyncService
 
     public async Task<bool> SignInAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        using var response = await _httpClient.PostAsJsonAsync("api/auth/login", new { email, password }, cancellationToken);
+        using var response = await _httpClient.PostAsJsonAsync("login", new { email, password }, cancellationToken);
         if (!response.IsSuccessStatusCode) return false;
         var result = await response.Content.ReadFromJsonAsync<TokenResponse>(cancellationToken: cancellationToken);
         if (string.IsNullOrWhiteSpace(result?.AccessToken)) return false;

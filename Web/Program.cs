@@ -114,7 +114,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<IdentityUser>().RequireRateLimiting("auth");
 
 app.MapPost("/api/auth/register", async (RegisterRequest request, UserManager<IdentityUser> userManager) =>
 {

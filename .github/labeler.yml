@@ -1,0 +1,13 @@
+web:
+  - Web/**/*
+  - Web.Tests/**/*
+android:
+  - app/**/*
+  - app-compose/**/*
+  - shared/**/*
+maui:
+  - Platforms/**/*
+  - Views/**/*
+  - Services/**/*
+ci:
+  - .github/**/*

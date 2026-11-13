@@ -1,95 +1,71 @@
-Trackr Android App
-==================
+# SiteSync Tracker
 
-**Note**: Trackr uses version 7 of Gradle, which currently requires Android Studio Beta or Canary.
+SiteSync helps track goods, quantities, delivery status, and locations with a
+.NET MAUI application and an ASP.NET Core inventory API and HTML dashboard.
 
-Trackr is a sample task management app used to explore common UI patterns
-from the perspective of supporting accessibility. Trackr is currently under
-development.
+## Repository layout
 
-Using Trackr, end users can discover, create, and edit tasks; they can
-assign tasks to team members and they can associate different tags with
-each task.  Users can archive a task by swiping right and they can modify a
-task's priority by dragging it up or down.
+| Path | Component |
+| --- | --- |
+| SiteSyncTracker.csproj, Views, Services | SiteSync MAUI application |
+| Web | ASP.NET Core API and browser dashboard |
+| Web.Tests | API integration tests |
+| app, app-compose, shared | Separate Kotlin Trackr Android sample |
 
-Developers are encouraged to explore Trackr using an accessibility service
-like [TalkBack](https://support.google.com/accessibility/android/answer/6283677?hl=en) or
-[Switch Access](https://support.google.com/accessibility/android/answer/6122836?hl=en);
-developers are also encouraged to try out the various accessibility settings
-found on their devices (see Settings > Accessibility on most Android phones)
-when using Trackr. If you have any suggestions, please create an issue
-(see below).
+The Trackr sample's original accessibility documentation and attribution are
+preserved in [docs/Trackr.md](docs/Trackr.md). It uses different application IDs
+from SiteSync and is built by the Android/Gradle workflows.
 
-Trackr is designed with the goal of allowing all users to enjoy its core
-functionality, including users with disabilities who may interact with their
-devices using accessibility services. So, for example, while blind and low
-vision users or users with manual dexterity issues may not be able to perform
-the swipe gesture to archive an item or drag and drop items to reorder their
-priority, they should nonetheless be able to access the archive and reorder
-functionality through the accessibility service they are using.
+## Run the web application
 
-APIs showcased
----------------------------
+Install the .NET 10 SDK selected by global.json.
 
-The following accessibility APIs (non-exhaustive list) are showcased in this sample:
+1. Set Admin__Email and Admin__Password in your environment. Use a strong password
+   of at least 12 characters including a number and a symbol.
+2. Run: dotnet run --project Web/SiteSyncTracker.Web.csproj
+3. Open the URL printed by ASP.NET Core and sign in with the configured administrator.
 
-- [ViewCompat#addAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#addAccessibilityAction(android.view.View,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): to surface functionality like swipe-to-archive, drag and drop, etc.
-- [ViewCompat#performAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#performAccessibilityAction(android.view.View,%20int,%20android.os.Bundle)): used in testing.
-- [ViewCompat#replaceAccessibilityAction()](https://developer.android.com/reference/androidx/core/view/ViewCompat#replaceAccessibilityAction(android.view.View,%20androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat,%20java.lang.CharSequence,%20androidx.core.view.accessibility.AccessibilityViewCommand)): used to customize the label associated with an action.
-- [ViewCompat#setStateDescription()](https://developer.android.com/reference/androidx/core/view/ViewCompat#setStateDescription(android.view.View,%20java.lang.CharSequence)): used to specify state associated with a view.
-- [AccessibilityManager#getRecommendedTimeoutMillis()](https://developer.android.com/reference/android/view/accessibility/AccessibilityManager#getRecommendedTimeoutMillis(int,%20int)): used to specify the timeout for ephemeral content.
+The dashboard keeps its bearer token in memory; refresh requires signing in again.
+Registered User accounts may read inventory; Admin accounts may also create,
+update, and delete inventory through the API.
 
-Getting Started
--------------------------
+Use HTTPS outside a local development environment. The MAUI RemoteSyncService
+uses the built-in POST /login endpoint. Registration is available at
+POST /api/auth/register; authenticated inventory is at /api/inventory.
 
-This project uses the Gradle build system. To build this project, use the
-`gradlew build` command or use "Import Project" in Android Studio.
+### Docker
 
-To run tests, run `gradlew test`
+Copy .env.example to .env, set ADMIN_EMAIL and ADMIN_PASSWORD, then run:
 
-To learn more about Android accessibility, visit the
-[Android accessibility](https://www.android.com/accessibility/) page. To learn
-more about developer facing aspects of Android accessibility, read the
-[accessibility developer guide](https://developer.android.com/guide/topics/ui/accessibility).
+    docker compose up --build -d
 
-Screenshots
------------
+Open http://localhost:8080 for local use. The compose service persists databases in
+the sitesync-data volume. Put a trusted HTTPS reverse proxy in front of any remote
+deployment; the compose HTTP port is intended for local development.
 
-|Home Screen TalkBack|Detail|Edit|
-|:--:|:--:|:--:|
-|<img src="screenshots/talkback_home.png" alt="Home Screen TalkBack" title="Task list screen with TalkBack on" width="240">|<img src="screenshots/detail_dark.png" alt="Detail" title="Detail screen in dark mode" width="240">|<img src="screenshots/edit.png" alt="Edit" title="Task edit screen" width="240">|
+## Build and verify
 
-Issues
------------
+    dotnet test Web.Tests/SiteSyncTracker.Web.Tests.csproj -c Release
+    dotnet build Web/SiteSyncTracker.Web.csproj -c Release
+    dotnet workload install maui-android
+    dotnet publish SiteSyncTracker.csproj -c Release -f net10.0-android -p:TargetFrameworks=net10.0-android
 
-We are continuously working to improve this sample and add new features. If
-you have suggestions for improvement or if you encounter a problem, please
-provide feedback to us via the issue tracker. When creating an issue, try to
-include the following:
+Build Windows on Windows with the maui-windows workload and framework
+net10.0-windows10.0.19041.0. iOS and Mac Catalyst require an appropriate macOS/Xcode
+environment and are not validated by these release checks.
 
-- The device manufacturer and model
-- The Android build running on the device
-- If using an accessibility service (for example a screen reader), the name
-and version number of that service
-- A description of the issue; include screenshots/screencaps if you think
-they'll help us understand the problem
+For the separate Kotlin sample, import the root Gradle project in Android Studio,
+or run ./gradlew assembleDebug testDebugUnitTest. Commit the Gradle wrapper JAR
+alongside its properties and scripts so clean checkouts can build.
 
-License
--------------
+## Release 2.0
 
-Copyright 2021 Google, Inc.
+See [CHANGELOG.md](CHANGELOG.md) for changes and
+[docs/RELEASE_REVIEW.md](docs/RELEASE_REVIEW.md) for validation and limitations.
+Development APKs are not Play Store-signed distribution packages. Production
+Android and Windows distribution require the owner's signing and store setup.
 
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
+## License and attribution
 
-<https://www.apache.org/licenses/LICENSE-2.0>
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-License for the specific language governing permissions and limitations under
-the License.
+See [LICENSE](LICENSE). The Kotlin Trackr sample includes Google/Android Open
+Source Project code and retains its existing Apache 2.0 notices.
