@@ -9,7 +9,7 @@ tree=ET.fromstring(adb("shell","cat","/sdcard/stock-ui.xml"))
 target=None
 for node in tree.iter("node"):
     name=node.get("text","")+" "+node.get("content-desc","")
-    if "Search Manifest" in name or "Search inventory" in name:
+    if "Inventory Tab." in name or node.get("text","") == "Inventory":
         values=list(map(int,re.findall(r"\d+",node.get("bounds",""))))
         if len(values)==4:target=((values[0]+values[2])//2,(values[1]+values[3])//2);break
 if target is None:raise RuntimeError("Inventory navigation was not found in the built Android app.")

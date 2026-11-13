@@ -23,7 +23,7 @@ jobs:
           - language: actions
             build-mode: none
           - language: csharp
-            build-mode: autobuild
+            build-mode: none
     steps:
       - uses: actions/checkout@v5
       - uses: github/codeql-action/init@v4
