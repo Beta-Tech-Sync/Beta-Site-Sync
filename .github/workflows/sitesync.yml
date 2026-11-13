@@ -116,7 +116,8 @@ jobs:
           name: sitesync-windows
           path: artifacts/windows/**/*
           if-no-files-found: error
-      - name: Launch Windows app and capture previews
+      - name: Launch Windows app and capture previews (optional)
+        continue-on-error: true
         shell: pwsh
         run: ./.github/scripts/windows-preview.ps1
       - uses: actions/upload-artifact@v5
