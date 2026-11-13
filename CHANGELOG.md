@@ -2,6 +2,15 @@
 
 ## 2.0.0
 
+### Client stock and goods workflow
+- Add 72 building-supply and consumable definitions plus easy custom client stock.
+- Add CSV/JSON import/export, backups, native/browser sharing and readable receipt exports.
+- Add signed receipt/issue records with condition, timestamps, handover location and optional GPS.
+- Add barcode/QR and compatible NFC device adapters; keep manual/keyboard-reader lookup.
+- Isolate web stock by signed-in client, reject stale updates and preserve signed records.
+- Share the workflow across MAUI Android/Windows, Kotlin app variants and the browser demo.
+- Keep native and demo storage explicitly local; do not claim automatic cloud sync.
+
 ### SiteSync
 - Inventory tracking with quantities, delivery status, locations, and goods-in/out pages.
 - ASP.NET Core inventory API with Identity authentication and Admin-only writes.
