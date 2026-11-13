@@ -15,10 +15,10 @@
  */
 
 plugins {
-    alias libs.plugins.android.application
+    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    alias libs.plugins.dagger
+    id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.plugin.compose'
 }
 
@@ -32,11 +32,6 @@ android {
         versionCode 1
         versionName '1.0.0-alpha01'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
     }
     buildTypes {
         release {
@@ -69,12 +64,6 @@ android {
     packagingOptions {
         resources {
             excludes += ['/META-INF/AL2.0', '/META-INF/LGPL2.1']
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
         }
     }
     namespace 'com.example.android.trackr.compose'

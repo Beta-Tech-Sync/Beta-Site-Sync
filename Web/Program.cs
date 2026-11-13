@@ -31,8 +31,7 @@ builder.Services.AddProblemDetails();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    options.KnownIPNetworks.Clear();
-    options.KnownProxies.Clear();
+    // Keep the framework defaults: only trusted loopback proxies are accepted.
 });
 builder.Services.AddRateLimiter(options =>
     options.AddFixedWindowLimiter("auth", limiterOptions =>

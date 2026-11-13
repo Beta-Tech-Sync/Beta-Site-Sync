@@ -64,7 +64,6 @@ android {
         unitTests {
             includeAndroidResources = true
         }
-        targetSdk 33
     }
     namespace 'com.example.android.trackr.shared'
     lint {
