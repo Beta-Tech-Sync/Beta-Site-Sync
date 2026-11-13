@@ -62,8 +62,11 @@ import com.example.android.trackr.data.TagColor
 import com.example.android.trackr.data.TaskStatus
 import com.example.android.trackr.data.TaskSummary
 import com.example.android.trackr.data.User
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.asPaddingValues
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -101,16 +104,11 @@ private fun TasksContent(
     onArchiveClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
-    val systemBars = LocalWindowInsets.current.systemBars
+    val systemBars = WindowInsets.systemBars
     var bottomBarHeight by remember { mutableStateOf(0) }
     Scaffold(
         modifier = Modifier.padding(
-            rememberInsetsPaddingValues(
-                insets = systemBars,
-                applyStart = false,
-                applyEnd = false,
-                applyBottom = false
-            )
+            systemBars.only(WindowInsetsSides.Top).asPaddingValues()
         ),
         bottomBar = {
             TasksBottomBar(
@@ -169,13 +167,10 @@ private fun TasksBottomBar(
     modifier: Modifier = Modifier
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
-    val systemBars = LocalWindowInsets.current.systemBars
+    val systemBars = WindowInsets.systemBars
     BottomAppBar(
         modifier = modifier,
-        contentPadding = rememberInsetsPaddingValues(
-            insets = systemBars,
-            applyTop = false
-        ),
+        contentPadding = systemBars.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom).asPaddingValues(),
         cutoutShape = CircleShape
     ) {
         IconButton(onClick = { menuExpanded = true }) {

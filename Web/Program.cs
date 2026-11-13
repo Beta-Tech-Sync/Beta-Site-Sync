@@ -51,6 +51,12 @@ if (!builder.Configuration.GetValue<bool>("DisableHttpsRedirection"))
 }
 app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions {
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(Path.Combine(AppContext.BaseDirectory, "InventoryUi")),
+    RequestPath = "/workspace"
+});
+app.MapGet("/workspace", () => Results.Redirect("/workspace/index.html"));
+app.MapWorkspace();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRateLimiter();

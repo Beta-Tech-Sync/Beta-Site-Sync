@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
+      - name: Test shared inventory rules
+        run: node --test InventoryUi/tests/core.test.cjs
       - name: Restore test dependencies
         run: dotnet restore Web.Tests/SiteSyncTracker.Web.Tests.csproj
       - name: Run API tests
@@ -106,7 +108,7 @@ jobs:
           api-level: 35
           arch: x86_64
           script: |
-            set -euxo pipefail
+            set -eu
             adb install -r SiteSyncTracker.apk
             adb shell pm list packages | grep com.sitesync.tracker
             adb shell monkey -p com.sitesync.tracker -c android.intent.category.LAUNCHER 1
