@@ -20,7 +20,7 @@ public sealed class StockWorkspacePage : ContentPage
         Title="Stock & deliveries";
         var service=IPlatformApplication.Current!.Services.GetRequiredService<InventoryService>();
         _store=new WorkspaceStore(service);
-        _web=new HybridWebView {HybridRoot="InventoryUi",DefaultFile="index.html"};
+        _web=new HybridWebView {HybridRoot="InventoryUi",DefaultFile="maui.html"};
         _web.RawMessageReceived+=OnRequest;
         Content=_web;
     }

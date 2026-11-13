@@ -3,7 +3,7 @@
 'use strict';
 const $ = id => document.getElementById(id), C = StockCore;
 let state, token = null, editing = null, coordinates = null, signed = false, stream = null, scanner = null, pending = new Map();
-const hybrid = () => window.hybridWebViewHost || (window.chrome && window.chrome.webview) || (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.webwindowinterop);
+const hybrid = () => window.HybridWebView && typeof window.HybridWebView.SendRawMessage === 'function';
 const native = () => !!window.StockNative || !!hybrid();
 const demo = !native() && !location.pathname.startsWith('/workspace');
 const copy = v => JSON.parse(JSON.stringify(v));
@@ -16,6 +16,7 @@ function callNative(action, payload) {
   pending.set(id,{resolve:resolve,reject:reject});
   const message = JSON.stringify({id:id,action:action,payload:payload});
   if (window.StockNative) window.StockNative.postMessage(message);
+  else if (hybrid()) window.HybridWebView.SendRawMessage(message);
   else if (window.hybridWebViewHost) window.hybridWebViewHost.sendMessage('__RawMessage|' + message);
   else if (window.chrome && window.chrome.webview) window.chrome.webview.postMessage('__RawMessage|' + message);
   else window.webkit.messageHandlers.webwindowinterop.postMessage('__RawMessage|' + message);

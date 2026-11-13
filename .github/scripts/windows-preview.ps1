@@ -43,7 +43,11 @@ try {
         $stock = $window.FindFirst([System.Windows.Automation.TreeScope]::Descendants,$textCondition)
         if ($stock) { break }
     }
-    if (-not $stock) { throw "Windows stock workspace did not appear." }
+    if (-not $stock) {
+        Save-WindowPreview "windows-after-navigation.png"
+        $window.FindAll([System.Windows.Automation.TreeScope]::Descendants,[System.Windows.Automation.Condition]::TrueCondition) | ForEach-Object { Write-Host ("UI: " + $_.Current.Name) }
+        throw "Windows stock workspace did not appear."
+    }
     Save-WindowPreview "windows-stock.png"
     Write-Host "Windows stock workspace rendered; preview captured."
 } finally { if (-not $process.HasExited) { Stop-Process -Id $process.Id -Force } }

@@ -89,7 +89,7 @@
                         android:layout_marginTop="@dimen/spacing_large"
                         android:orientation="horizontal">
 
-                        <Button
+                        <com.example.android.trackr.ui.widget.StarButton
                             android:id="@+id/star"
                             android:layout_width="@dimen/home_task_star_size"
                             android:layout_height="@dimen/home_task_star_size"

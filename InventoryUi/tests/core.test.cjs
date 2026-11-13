@@ -11,3 +11,11 @@ test('signed records and opening balance are preserved',()=>{const old=doc();old
 test('imports add own stock without overwriting duplicate codes',()=>{const old=doc(),i=item();i.name='Changed';const other={...item(),sku:'PAINT-2',name:'Paint'};const merged=C.merge(old,[i,other]);assert.equal(merged.added,1);assert.equal(merged.skipped,1);assert.equal(merged.document.items[0].name,'M12 bolts');assert.equal(old.items.length,1);});
 test('stale revisions and invalid GPS are rejected',()=>{const old=doc(),n=doc();n.revision=3;assert.throws(()=>C.validate(n,old));const d=doc();d.movements.push(movement({coordinates:{latitude:300,longitude:1,accuracy:1}}));assert.throws(()=>C.validate(d),/GPS/);});
 test('72 catalogue definitions have unique codes and no invented stock',()=>{const catalog=require('../catalog.json');C.validate({schema:1,revision:0,items:catalog,movements:[]});assert.equal(catalog.length,72);assert.ok(catalog.every(i=>i.openingQuantity===0));});
+
+test('MAUI entry includes the supported framework bridge before inventory startup',()=>{
+ const fs=require('node:fs'),path=require('node:path');
+ const root=path.join(__dirname,'..');
+ const html=fs.readFileSync(path.join(root,'maui.html'),'utf8');
+ assert.ok(html.indexOf('_framework/hybridwebview.js')<html.indexOf('app.js'));
+ assert.equal(html.replace('<script src="_framework/hybridwebview.js"></script>',''),fs.readFileSync(path.join(root,'index.html'),'utf8'));
+});
