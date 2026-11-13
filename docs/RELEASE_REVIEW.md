@@ -59,3 +59,12 @@ the final release commit remain authoritative for Android and Windows builds.
 - Preserve ASP.NET Core's default trusted proxy restrictions; do not blindly
   trust forwarded headers from every sender. A remote proxy deployment needs an
   explicit trusted proxy configuration.
+
+## Product limitations to review
+
+The MAUI inventory pages use local SQLite storage. The RemoteSyncService is
+registered but has no sign-in/sync UI wired into these pages. Dashboard overview
+counts and recent activity are examples, not calculations from stored inventory;
+the release preparation labels them as examples and removes the unconditional
+cloud-synced claim. Manifest search is implemented; camera scanning is not.
+A production cloud-sync promise requires additional implementation and testing.

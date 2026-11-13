@@ -40,6 +40,8 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
+        resValues true
         dataBinding = true
     }
 

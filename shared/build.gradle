@@ -21,6 +21,10 @@ plugins {
 }
 
 android {
+    buildFeatures {
+        buildConfig true
+        resValues true
+    }
     compileSdk 37
     buildToolsVersion build_tools_version
 

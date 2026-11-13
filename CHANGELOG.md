@@ -7,6 +7,7 @@
 - ASP.NET Core inventory API with Identity authentication and Admin-only writes.
 - HTML dashboard sign-in and sign-out, with bearer tokens held only in memory.
 - MAUI sign-in now uses the server's built-in /login endpoint.
+- Label example dashboard content and local storage accurately; remove the unimplemented scan claim.
 - Application version metadata updated to 2.0.0 / build 2.
 - Regression coverage for registration, bearer-token login, inventory reads, and denied User writes.
 

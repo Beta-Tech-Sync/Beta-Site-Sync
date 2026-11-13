@@ -24,10 +24,10 @@
                     BackgroundColor="#E8F5E9"
                     StrokeShape="RoundRectangle 16"
                     VerticalOptions="Center"
-                    SemanticProperties.Description="Sync Status: Real-time synced with cloud">
+                    SemanticProperties.Description="Storage status: local inventory on this device">
                 <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                     <Ellipse Fill="#2E7D32" WidthRequest="8" HeightRequest="8" VerticalOptions="Center" />
-                    <Label Text="Synced" FontSize="13" FontAttributes="Bold" TextColor="#2E7D32" VerticalOptions="Center" />
+                    <Label Text="Local data" FontSize="13" FontAttributes="Bold" TextColor="#2E7D32" VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Border>
         </Grid>
@@ -38,7 +38,7 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="18,16,18,20" Spacing="20">
                 <!-- Site Overview Section -->
-                <Label Text="Site Overview"
+                <Label Text="Example Site Overview"
                        FontSize="26"
                        FontAttributes="Bold"
                        TextColor="#1F1F1F"
@@ -51,7 +51,7 @@
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 12"
                             BackgroundColor="#B7782D"
-                            SemanticProperties.Description="12 items in transit. Tap to view in inventory.">
+                            SemanticProperties.Description="Example: 12 items in transit. Tap to view in inventory.">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnStatusCardTapped" />
                         </Border.GestureRecognizers>
@@ -66,7 +66,7 @@
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 12"
                             BackgroundColor="#1E78B8"
-                            SemanticProperties.Description="48 items delivered to yard. Tap to view in inventory.">
+                            SemanticProperties.Description="Example: 48 items delivered to yard. Tap to view in inventory.">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnStatusCardTapped" />
                         </Border.GestureRecognizers>
@@ -81,7 +81,7 @@
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 12"
                             BackgroundColor="#E8551A"
-                            SemanticProperties.Description="21 items staged on level. Tap to view in inventory.">
+                            SemanticProperties.Description="Example: 21 items staged on level. Tap to view in inventory.">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnStatusCardTapped" />
                         </Border.GestureRecognizers>
@@ -96,7 +96,7 @@
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 12"
                             BackgroundColor="#1D8F4D"
-                            SemanticProperties.Description="95 items installed. Tap to view in inventory.">
+                            SemanticProperties.Description="Example: 95 items installed. Tap to view in inventory.">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnStatusCardTapped" />
                         </Border.GestureRecognizers>
@@ -144,7 +144,7 @@
                         SemanticProperties.Hint="Opens the goods out form to issue site materials" />
 
                 <!-- Action Button 3: Scan Manifest / Search -->
-                <Button Text="Search &amp; Scan Manifest"
+                <Button Text="Search Manifest"
                         HeightRequest="60"
                         MinimumHeightRequest="56"
                         FontSize="18"
@@ -158,7 +158,7 @@
                         SemanticProperties.Hint="Opens the inventory search and manifest lookup" />
 
                 <!-- Recent Activity Section -->
-                <Label Text="Recent Activity"
+                <Label Text="Example Recent Activity"
                        FontSize="24"
                        FontAttributes="Bold"
                        TextColor="#1F1F1F"
@@ -170,7 +170,7 @@
                         Stroke="#DDDDDD"
                         StrokeShape="RoundRectangle 12"
                         BackgroundColor="White"
-                        SemanticProperties.Description="Recent Activity: MAN-1042 Rebar bundles delivered to Main Laydown Yard">
+                        SemanticProperties.Description="Example: Recent Activity: MAN-1042 Rebar bundles delivered to Main Laydown Yard">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnStatusCardTapped" />
                     </Border.GestureRecognizers>
