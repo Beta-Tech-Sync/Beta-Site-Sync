@@ -169,7 +169,7 @@ jobs:
           api-level: 35
           arch: x86_64
           script: |
-            set -euxo pipefail
+            set -eu
             adb install -r SiteSyncTracker.apk
             adb shell pm list packages | grep com.sitesync.tracker
             adb shell monkey -p com.sitesync.tracker -c android.intent.category.LAUNCHER 1

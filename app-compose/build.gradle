@@ -27,7 +27,7 @@ android {
     buildToolsVersion build_tools_version
     defaultConfig {
         applicationId 'com.example.android.trackr.compose'
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName '1.0.0-alpha01'
@@ -81,6 +81,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
     implementation project(':shared')
+    // Keep the app and AndroidX test classpaths on the same futures version.
+    implementation 'androidx.concurrent:concurrent-futures:1.2.0'
     coreLibraryDesugaring libs.desugar.jdk.libs
 
     implementation libs.core.ktx

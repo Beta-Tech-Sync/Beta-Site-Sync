@@ -68,3 +68,9 @@ counts and recent activity are examples, not calculations from stored inventory;
 the release preparation labels them as examples and removes the unconditional
 cloud-synced claim. Manifest search is implemented; camera scanning is not.
 A production cloud-sync promise requires additional implementation and testing.
+
+The Kotlin sample minimum SDK is now 24 (Android 7.0), matching its Navigation
+runtime requirement. Android 5/6 support is not retained by that sample change.
+The emulator runner invokes /bin/sh, so its script uses portable set -eu rather
+than bash-only pipefail. AndroidX test and main futures dependencies are aligned
+to address the observed 1.1.0 versus 1.2.0 classpath constraint.

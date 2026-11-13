@@ -20,6 +20,8 @@
 - Preserve unused Azure JAR and Gradle publishing templates under docs/workflow-templates.
 - Add the missing labeler configuration and document the separate Trackr sample.
 
+- Align the Kotlin sample minimum SDK to 24 (Android 7.0) for its Navigation dependency.
+
 ### Distribution notes
 - SiteSync MAUI and the Kotlin Trackr sample are separate applications.
 - iOS and Mac Catalyst have not been validated for this release.

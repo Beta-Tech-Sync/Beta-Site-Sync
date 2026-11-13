@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.trackr"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 31
         multiDexEnabled true
         versionCode 1
@@ -90,6 +90,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
     implementation project(':shared')
+    // Keep the app and AndroidX test classpaths on the same futures version.
+    implementation 'androidx.concurrent:concurrent-futures:1.2.0'
 
     coreLibraryDesugaring libs.desugar.jdk.libs
 
