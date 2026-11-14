@@ -16,35 +16,18 @@
 
 package com.example.android.trackr.ui.inventory
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.example.android.trackr.R
-import com.example.android.trackr.databinding.InventoryFragmentBinding
-import com.example.android.trackr.ui.dataBindings
-import com.example.android.trackr.ui.utils.repeatWithViewLifecycle
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.example.android.trackr.stock.StockWorkspaceActivity
 
-@AndroidEntryPoint
 class InventoryFragment : Fragment(R.layout.inventory_fragment) {
-
-    private val viewModel: InventoryViewModel by viewModels()
-    private val binding by dataBindings(InventoryFragmentBinding::bind)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val adapter = InventoryAdapter()
-        binding.inventoryList.adapter = adapter
-
-        repeatWithViewLifecycle {
-            launch {
-                viewModel.inventoryItems.collect {
-                    adapter.submitList(it)
-                }
-            }
+        super.onViewCreated(view,savedInstanceState)
+        view.findViewById<View>(R.id.open_stock_workspace).setOnClickListener {
+            startActivity(Intent(requireContext(),StockWorkspaceActivity::class.java))
         }
     }
 }

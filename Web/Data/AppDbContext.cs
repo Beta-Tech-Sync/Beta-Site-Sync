@@ -9,8 +9,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Status> Statuses { get; set; } = null!;
     public DbSet<Location> Locations { get; set; } = null!;
 
+    public DbSet<SiteSyncTracker.Web.WorkspaceRecord> Workspaces { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<SiteSyncTracker.Web.WorkspaceRecord>().HasKey(w => w.OwnerId);
+        modelBuilder.Entity<SiteSyncTracker.Web.WorkspaceRecord>().Property(w => w.Revision).IsConcurrencyToken();
         modelBuilder.Entity<Status>().HasData(
             new Status { Id = 1, StatusName = "In Transit" },
             new Status { Id = 2, StatusName = "Delivered to Yard" },

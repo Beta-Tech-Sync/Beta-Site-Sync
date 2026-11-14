@@ -1,4 +1,7 @@
 using Microsoft.Extensions.Logging;
+#if ANDROID
+using ZXing.Net.Maui.Controls;
+#endif
 using SiteSyncTracker.Services;
 using SiteSyncTracker.Views;
 
@@ -18,6 +21,12 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+#if ANDROID
+        builder.UseBarcodeReader();
+#endif
+#if WINDOWS
+        Environment.SetEnvironmentVariable("WEBVIEW2_USER_DATA_FOLDER", Path.Combine(FileSystem.AppDataDirectory, "WebView2"));
+#endif
         // Register pages for DI navigation
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<GoodsInPage>();

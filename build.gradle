@@ -68,7 +68,7 @@ buildscript {
 
     dependencies {
         classpath libs.gradle
-        classpath 'org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.2.10'
+        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlin_version"
         classpath libs.kotlin.gradle.plugin
         classpath libs.hilt.android.gradle.plugin
         classpath libs.navigation.safe.args.gradle.plugin

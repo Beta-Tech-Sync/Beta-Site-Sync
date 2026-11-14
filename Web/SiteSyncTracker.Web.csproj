@@ -1,10 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <Version>2.0.0</Version>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>SiteSyncTracker.Web</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../Workspace/*.cs" Link="Workspace/%(Filename)%(Extension)" />
+    <Content Include="../InventoryUi/**/*" Link="InventoryUi/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.13" />
