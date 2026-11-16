@@ -12,10 +12,10 @@ public static class ServiceCollectionExtensions
         builder.Services.AddSingleton<InventoryService>();
         builder.Services.AddSingleton<RemoteSyncService>(serviceProvider =>
         {
-#if DEBUG && ANDROID
+#if DEBUG && ANDROID && !SITESYNC_PREVIEW
             const string defaultBaseUrl = "http://10.0.2.2:8080/";
 #else
-            const string defaultBaseUrl = "https://localhost:7001/";
+            const string defaultBaseUrl = "https://beta-sync-tech.com.au/";
 #endif
             var baseUrl = Preferences.Default.Get("api_base_url", defaultBaseUrl).Trim();
             if (!baseUrl.EndsWith('/'))
