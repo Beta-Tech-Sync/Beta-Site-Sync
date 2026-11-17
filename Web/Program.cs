@@ -8,6 +8,12 @@ using SiteSyncTracker.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dataDirectory = builder.Configuration["SiteSync:DataDirectory"];
+if (!string.IsNullOrWhiteSpace(dataDirectory))
+{
+    Directory.CreateDirectory(dataDirectory);
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Inventory") ?? GetDatabaseConnectionString("sitesync.db")));
 builder.Services.AddDbContext<AuthDbContext>(options =>
