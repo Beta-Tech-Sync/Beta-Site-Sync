@@ -6,6 +6,8 @@ COPY ["Web/Models/", "Models/"]
 COPY ["Web/Data/", "Data/"]
 RUN dotnet restore "Web/SiteSyncTracker.Web.csproj"
 
+COPY Workspace/ Workspace/
+COPY InventoryUi/ InventoryUi/
 COPY Web/ Web/
 WORKDIR /src/Web
 RUN dotnet publish "SiteSyncTracker.Web.csproj" -c Release -o /app/publish --no-restore /p:UseAppHost=false

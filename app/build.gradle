@@ -15,11 +15,11 @@
  */
 
 plugins {
-    alias libs.plugins.android.application
+    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    alias libs.plugins.dagger
-    alias libs.plugins.navigation.safeargs.kotlin
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.trackr"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 31
         multiDexEnabled true
         versionCode 1
@@ -40,17 +40,19 @@ android {
     }
 
     buildFeatures {
+        buildConfig true
+        resValues true
         dataBinding = true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildTypes {
@@ -88,6 +90,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
     implementation project(':shared')
+    // Keep the app and AndroidX test classpaths on the same futures version.
+    implementation 'androidx.concurrent:concurrent-futures:1.2.0'
 
     coreLibraryDesugaring libs.desugar.jdk.libs
 

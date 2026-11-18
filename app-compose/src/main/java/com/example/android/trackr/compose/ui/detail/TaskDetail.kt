@@ -22,14 +22,15 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.asPaddingValues
 
 @Composable
 fun TaskDetail(
     viewModel: TaskDetailViewModel
 ) {
-    val padding = rememberInsetsPaddingValues(LocalWindowInsets.current.systemBars)
+    val padding = WindowInsets.systemBars.asPaddingValues()
     Card(
         modifier = Modifier
             .fillMaxSize()
