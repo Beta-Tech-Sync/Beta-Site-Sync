@@ -30,17 +30,17 @@ public partial class MainPage : ContentPage
 
     private async void OnGoodsInClicked(object? sender, EventArgs e)
     {
-        await NavigateToAsync(nameof(GoodsInPage));
+        await Navigation.PushAsync(new StockWorkspacePage());
     }
 
     private async void OnGoodsOutClicked(object? sender, EventArgs e)
     {
-        await NavigateToAsync(nameof(GoodsOutPage));
+        await Navigation.PushAsync(new StockWorkspacePage());
     }
 
     private async void OnInventoryClicked(object? sender, EventArgs e)
     {
-        await NavigateToAsync(nameof(InventoryPage));
+        await Navigation.PushAsync(new StockWorkspacePage());
     }
 
     private async void OnDashboardNavClicked(object? sender, EventArgs e)
@@ -50,6 +50,6 @@ public partial class MainPage : ContentPage
 
     private async void OnStatusCardTapped(object? sender, TappedEventArgs e)
     {
-        await NavigateToAsync(nameof(InventoryPage));
+        await Navigation.PushAsync(new StockWorkspacePage());
     }
 }

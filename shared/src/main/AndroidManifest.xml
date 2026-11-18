@@ -14,4 +14,16 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
+    <application>
+        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui" />
+        <activity android:name="com.example.android.trackr.stock.StockWorkspaceActivity" android:exported="false" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+        <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.stockfiles" android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/stock_file_paths" />
+        </provider>
+    </application>
+</manifest>

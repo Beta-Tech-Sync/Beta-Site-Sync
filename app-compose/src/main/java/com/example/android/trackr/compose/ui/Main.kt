@@ -16,6 +16,14 @@
 
 package com.example.android.trackr.compose.ui
 
+import android.content.Intent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import com.example.android.trackr.stock.StockWorkspaceActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,13 +35,19 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android.trackr.compose.ui.detail.TaskDetail
 import com.example.android.trackr.compose.ui.detail.TaskDetailViewModel
 import com.example.android.trackr.compose.ui.tasks.Tasks
-import com.google.accompanist.insets.ProvideWindowInsets
+import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
 fun Main() {
     TrackrTheme {
-        ProvideWindowInsets {
+        CompositionLocalProvider {
             val navController = rememberNavController()
+            val context = LocalContext.current
+            Column {
+                Button(onClick = { context.startActivity(Intent(context, StockWorkspaceActivity::class.java)) }) {
+                    Text("Stock & deliveries")
+                }
+                Box(Modifier.weight(1f)) {
             NavHost(
                 navController = navController,
                 startDestination = "tasks",
@@ -66,6 +80,8 @@ fun Main() {
                             taskId = backStackEntry.arguments?.getLong("taskId") ?: 0L
                         }
                     )
+                }
+            }
                 }
             }
         }

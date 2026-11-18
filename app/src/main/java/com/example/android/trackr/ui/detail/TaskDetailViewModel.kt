@@ -16,6 +16,7 @@
 
 package com.example.android.trackr.ui.detail
 
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.trackr.data.User
@@ -47,6 +48,8 @@ class TaskDetailViewModel @Inject constructor(
     val starred = detail.mapLatest { detail ->
         detail?.starUsers?.contains(currentUser) ?: false
     }.stateIn(viewModelScope, WhileViewSubscribed, false)
+
+    val starredLiveData = starred.asLiveData()
 
     fun toggleTaskStarState() {
         val id = taskId.value

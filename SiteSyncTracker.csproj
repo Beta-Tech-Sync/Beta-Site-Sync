@@ -7,6 +7,7 @@
 		<RootNamespace>SiteSyncTracker</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
+        <MauiHybridWebViewSupported>true</MauiHybridWebViewSupported>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
@@ -20,8 +21,8 @@
 		<ApplicationId>com.sitesync.tracker</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 		<AndroidUsesCleartextTraffic Condition="'$(Configuration)' == 'Debug'">true</AndroidUsesCleartextTraffic>
 
 		<!-- Unpackaged for local F5; MSIX for Microsoft Store / Release. -->
@@ -31,7 +32,7 @@
 		<AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
 		<GenerateAppxPackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GenerateAppxPackageOnBuild>
 
-		<SupportedOSPlatformVersion Condition="'$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))' == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))' == 'android'">24.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))' != 'android'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="'$([MSBuild]::GetTargetPlatformIdentifier($(TargetFramework)))' != 'android'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
@@ -51,6 +52,7 @@
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="InventoryUi\**\*" LogicalName="InventoryUi/%(RecursiveDir)%(Filename)%(Extension)" />
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
@@ -62,6 +64,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.4" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.13" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />

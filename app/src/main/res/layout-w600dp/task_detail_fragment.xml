@@ -95,7 +95,7 @@
                             android:layout_height="@dimen/home_task_star_size"
                             android:layout_marginEnd="20dp"
                             android:layout_marginStart="20dp"
-                            android:checked="@{viewModel.starred}"
+                            android:checked="@{viewModel.starredLiveData}"
                             android:gravity="center"
                             app:clickActionLabel="@{@string/toggle}"
                             app:ensureMinTouchArea="@{@dimen/min_touch_target}" />

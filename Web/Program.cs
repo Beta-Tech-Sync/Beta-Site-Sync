@@ -8,6 +8,12 @@ using SiteSyncTracker.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var dataDirectory = builder.Configuration["SiteSync:DataDirectory"];
+if (!string.IsNullOrWhiteSpace(dataDirectory))
+{
+    Directory.CreateDirectory(dataDirectory);
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Inventory") ?? GetDatabaseConnectionString("sitesync.db")));
 builder.Services.AddDbContext<AuthDbContext>(options =>
@@ -31,8 +37,7 @@ builder.Services.AddProblemDetails();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-    options.KnownIPNetworks.Clear();
-    options.KnownProxies.Clear();
+    // Keep the framework defaults: only trusted loopback proxies are accepted.
 });
 builder.Services.AddRateLimiter(options =>
     options.AddFixedWindowLimiter("auth", limiterOptions =>
@@ -52,6 +57,12 @@ if (!builder.Configuration.GetValue<bool>("DisableHttpsRedirection"))
 }
 app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions {
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(Path.Combine(AppContext.BaseDirectory, "InventoryUi")),
+    RequestPath = "/workspace"
+});
+app.MapGet("/workspace", () => Results.Redirect("/workspace/index.html"));
+app.MapWorkspace();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseRateLimiter();
@@ -114,7 +125,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<IdentityUser>().RequireRateLimiting("auth");
 
 app.MapPost("/api/auth/register", async (RegisterRequest request, UserManager<IdentityUser> userManager) =>
 {
