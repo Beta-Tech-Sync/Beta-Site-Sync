@@ -14,7 +14,8 @@ Damaged and quarantined receipts do not increase available stock. Signed records
 
 ## Storage and portability
 - Web: authenticated clients manage their own account-scoped inventory.
-- MAUI/Kotlin: private local device workspace; existing local inventory is imported on first use. The v2 workspace then owns stock updates. Legacy task data remains separate.
+- MAUI Android/Windows: `stock-workspace.db` holds the private SQLite workspace in app data. The first run imports the existing JSON workspace, including its revision and signed records, or loads the catalogue and legacy inventory on a fresh install. The original JSON file remains available for recovery. Save new backups through the app's JSON export.
+- Kotlin: private local device workspace. The v2 workspace owns stock updates and legacy task data remains separate.
 - Demo: this browser only; back up before clearing browser data.
 - Cross-device/team cloud synchronisation is not implemented. Transfer is explicit via exported files.
 - CSV is a stock snapshot without signatures; JSON preserves the versioned workspace and signed records. Imports add new codes and preserve existing definitions.
