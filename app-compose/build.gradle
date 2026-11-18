@@ -15,10 +15,10 @@
  */
 
 plugins {
-    alias libs.plugins.android.application
+    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    alias libs.plugins.dagger
+    id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.plugin.compose'
 }
 
@@ -27,16 +27,11 @@ android {
     buildToolsVersion build_tools_version
     defaultConfig {
         applicationId 'com.example.android.trackr.compose'
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName '1.0.0-alpha01'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
     }
     buildTypes {
         release {
@@ -45,14 +40,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
+        buildConfig true
+        resValues true
         compose true
     }
     composeOptions {
@@ -71,12 +68,6 @@ android {
             excludes += ['/META-INF/AL2.0', '/META-INF/LGPL2.1']
         }
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
-        }
-    }
     namespace 'com.example.android.trackr.compose'
 }
 
@@ -90,6 +81,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 
 dependencies {
     implementation project(':shared')
+    // Keep the app and AndroidX test classpaths on the same futures version.
+    implementation 'androidx.concurrent:concurrent-futures:1.2.0'
     coreLibraryDesugaring libs.desugar.jdk.libs
 
     implementation libs.core.ktx

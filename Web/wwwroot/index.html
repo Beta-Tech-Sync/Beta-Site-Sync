@@ -3,48 +3,68 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SiteSync Tracker</title>
+  <meta name="theme-color" content="#102b3f">
+  <meta name="description" content="SiteSync helps teams keep stock, deliveries and site activity in sync.">
+  <title>SiteSync | Stock and deliveries, in sync</title>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 70rem; }
-    h1 { margin-bottom: .25rem; }
-    .muted { color: #5f6368; }
-    table { border-collapse: collapse; margin-top: 1.5rem; width: 100%; }
-    th, td { border-bottom: 1px solid #ddd; padding: .75rem; text-align: left; }
-    th { background: #f4f4f4; }
-    #message { margin-top: 1rem; }
+    :root{color-scheme:light;--ink:#102b3f;--muted:#526779;--accent:#007d78;--pale:#e9f4f2;--line:#dce6ec}
+    *{box-sizing:border-box}body{margin:0;font:17px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#f6f9fb}
+    header{max-width:1120px;margin:auto;padding:26px 28px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-size:1.35rem;font-weight:800;letter-spacing:-.04em}.brand span{color:var(--accent)}
+    nav a{color:var(--ink);font-weight:650;text-decoration:none;margin-left:24px}
+    main{max-width:1120px;margin:36px auto;padding:0 28px}
+    .hero{background:linear-gradient(125deg,#102b3f,#174b58);color:#fff;border-radius:28px;padding:clamp(34px,7vw,76px);display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+    .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:800;color:#a9e4dc}
+    h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.03;letter-spacing:-.055em;margin:16px 0}
+    .hero p{max-width:580px;color:#e2edf0;font-size:1.15rem}
+    .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+    .button{display:inline-block;padding:15px 21px;border-radius:13px;font-weight:800;text-decoration:none}
+    .primary{background:#a9e4dc;color:#102b3f}.secondary{border:1px solid #9bb9c4;color:white}
+    .preview{background:#fff;color:var(--ink);border-radius:22px;padding:25px;box-shadow:0 20px 55px #091a2630}
+    .preview small{color:var(--muted);font-weight:700}.metric{font-size:2rem;font-weight:850;margin:8px 0 18px}
+    .row{padding:13px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+    .pill{background:var(--pale);color:#006c66;border-radius:99px;padding:4px 10px;font-weight:750;font-size:.82rem}
+    section{padding:64px 4px}.section-title{font-size:2rem;letter-spacing:-.04em;margin:0 0 8px}.sub{color:var(--muted);max-width:700px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}.card h3{margin:6px 0}.card p{color:var(--muted);margin-bottom:0}
+    footer{border-top:1px solid var(--line);padding:24px 28px;color:var(--muted);text-align:center}
+    @media(max-width:760px){header{padding:20px}nav a{margin-left:12px}.hero{grid-template-columns:1fr;margin-top:10px}.cards{grid-template-columns:1fr}main{margin-top:12px}}
   </style>
 </head>
 <body>
-  <h1>SiteSync Tracker</h1>
-  <p class="muted">ASP.NET Core inventory dashboard</p>
-  <p id="message">Loading inventory…</p>
-  <table hidden id="inventory-table">
-    <thead><tr><th>Manifest</th><th>Description</th><th>Expected</th><th>Received</th><th>Status</th><th>Location</th></tr></thead>
-    <tbody id="inventory-body"></tbody>
-  </table>
-  <script>
-    async function loadInventory() {
-      const message = document.querySelector('#message');
-      const table = document.querySelector('#inventory-table');
-      try {
-        const response = await fetch('/api/inventory');
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const items = await response.json();
-        document.querySelector('#inventory-body').innerHTML = items.map(item => `
-          <tr><td>${escapeHtml(item.manifestNumber)}</td><td>${escapeHtml(item.description)}</td>
-          <td>${item.quantityExpected}</td><td>${item.quantityReceived}</td>
-          <td>${escapeHtml(item.currentStatus?.statusName ?? '')}</td>
-          <td>${escapeHtml(item.currentLocation?.zoneName ?? '')}</td></tr>`).join('');
-        message.textContent = items.length ? `${items.length} inventory item(s)` : 'No inventory items have been recorded.';
-        table.hidden = !items.length;
-      } catch (error) {
-        message.textContent = `Unable to load inventory: ${error.message}`;
-      }
-    }
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>'"]/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
-    }
-    loadInventory();
-  </script>
+  <header>
+    <a class="brand" href="/" aria-label="SiteSync home">Site<span>Sync</span></a>
+    <nav><a href="/workspace/index.html">Open workspace</a></nav>
+  </header>
+  <main>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">SiteSync by Beta Tech</div>
+        <h1>Stock and deliveries, in sync.</h1>
+        <p>A clear, practical workspace for teams tracking inventory, site locations and incoming deliveries—designed to make everyday updates easier.</p>
+        <div class="actions">
+          <a class="button primary" href="/workspace/index.html">Open the web workspace</a>
+          <a class="button secondary" href="/downloads/sitesync-android-preview.apk">Download Android preview</a>
+        </div>
+      </div>
+      <div class="preview" aria-label="SiteSync workspace preview">
+        <small>WORKSPACE SNAPSHOT</small>
+        <div class="metric">One clear view</div>
+        <div class="row"><span>Stock records</span><span class="pill">Together</span></div>
+        <div class="row"><span>Delivery progress</span><span class="pill">Up to date</span></div>
+        <div class="row"><span>Mobile access</span><span class="pill">Android preview</span></div>
+      </div>
+    </div>
+    <section>
+      <h2 class="section-title">Built for work on the move</h2>
+      <p class="sub">Review the web workspace or try the Android preview. Your feedback will help shape the next release.</p>
+      <div class="cards">
+        <article class="card"><h3>Find stock quickly</h3><p>Keep inventory details and locations together in one workspace.</p></article>
+        <article class="card"><h3>Follow deliveries</h3><p>See the progress of expected and received goods at a glance.</p></article>
+        <article class="card"><h3>Use the screen that suits you</h3><p>Open the web experience or install the Android preview on a compatible device.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer>SiteSync · Beta Tech · Customer preview</footer>
 </body>
 </html>

@@ -1,0 +1,650 @@
+[
+  {
+    "sku": "STK-0001",
+    "name": "Treated pine 90 x 45 mm",
+    "category": "Timber and sheet",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0002",
+    "name": "Structural pine 140 x 45 mm",
+    "category": "Timber and sheet",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0003",
+    "name": "Plywood structural 17 mm",
+    "category": "Timber and sheet",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0004",
+    "name": "MDF board 18 mm",
+    "category": "Timber and sheet",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0005",
+    "name": "OSB bracing panel",
+    "category": "Timber and sheet",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0006",
+    "name": "Formwork plywood",
+    "category": "Timber and sheet",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0007",
+    "name": "Hardwood decking",
+    "category": "Timber and sheet",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0008",
+    "name": "Timber stakes",
+    "category": "Timber and sheet",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0009",
+    "name": "General purpose cement 20 kg",
+    "category": "Concrete and masonry",
+    "unit": "bag",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0010",
+    "name": "Premix concrete 20 kg",
+    "category": "Concrete and masonry",
+    "unit": "bag",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0011",
+    "name": "Brickies sand",
+    "category": "Concrete and masonry",
+    "unit": "m3",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0012",
+    "name": "Aggregate 20 mm",
+    "category": "Concrete and masonry",
+    "unit": "m3",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0013",
+    "name": "Hydrated lime 20 kg",
+    "category": "Concrete and masonry",
+    "unit": "bag",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0014",
+    "name": "Concrete blocks",
+    "category": "Concrete and masonry",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0015",
+    "name": "Common bricks",
+    "category": "Concrete and masonry",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0016",
+    "name": "AAC blocks",
+    "category": "Concrete and masonry",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0017",
+    "name": "Rebar N12",
+    "category": "Steel and reinforcement",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0018",
+    "name": "Rebar N16",
+    "category": "Steel and reinforcement",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0019",
+    "name": "Reinforcing mesh SL82",
+    "category": "Steel and reinforcement",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0020",
+    "name": "Tie wire",
+    "category": "Steel and reinforcement",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0021",
+    "name": "Rebar chairs 50 mm",
+    "category": "Steel and reinforcement",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0022",
+    "name": "Steel angle 50 x 50 mm",
+    "category": "Steel and reinforcement",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0023",
+    "name": "Galvanised lintel",
+    "category": "Steel and reinforcement",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0024",
+    "name": "Trench mesh",
+    "category": "Steel and reinforcement",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0025",
+    "name": "Bugle screws 75 mm",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0026",
+    "name": "Timber screws 50 mm",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0027",
+    "name": "Concrete anchors M10",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0028",
+    "name": "Galvanised nails 75 mm",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0029",
+    "name": "Bolts M12 x 100 mm",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0030",
+    "name": "Washers M12",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0031",
+    "name": "Wall plugs",
+    "category": "Fixings and fasteners",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0032",
+    "name": "Rivet 4.8 mm",
+    "category": "Fixings and fasteners",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0033",
+    "name": "PVC pipe 100 mm",
+    "category": "Plumbing and drainage",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0034",
+    "name": "PVC elbows 100 mm",
+    "category": "Plumbing and drainage",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0035",
+    "name": "PVC couplings 100 mm",
+    "category": "Plumbing and drainage",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0036",
+    "name": "Copper pipe 20 mm",
+    "category": "Plumbing and drainage",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0037",
+    "name": "PEX pipe 20 mm",
+    "category": "Plumbing and drainage",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0038",
+    "name": "Ball valve 20 mm",
+    "category": "Plumbing and drainage",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0039",
+    "name": "Stormwater grate",
+    "category": "Plumbing and drainage",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0040",
+    "name": "PTFE thread tape",
+    "category": "Plumbing and drainage",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0041",
+    "name": "Conduit 20 mm",
+    "category": "Electrical and services",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0042",
+    "name": "Conduit bends 20 mm",
+    "category": "Electrical and services",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0043",
+    "name": "Cable ties 200 mm",
+    "category": "Electrical and services",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0044",
+    "name": "Junction box",
+    "category": "Electrical and services",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0045",
+    "name": "Cable clips",
+    "category": "Electrical and services",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0046",
+    "name": "Insulation tape",
+    "category": "Electrical and services",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0047",
+    "name": "Cable tray",
+    "category": "Electrical and services",
+    "unit": "m",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0048",
+    "name": "Draw wire",
+    "category": "Electrical and services",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0049",
+    "name": "Plasterboard 13 mm",
+    "category": "Finishes and sealants",
+    "unit": "sheet",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0050",
+    "name": "Joint compound",
+    "category": "Finishes and sealants",
+    "unit": "bucket",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0051",
+    "name": "Plaster tape",
+    "category": "Finishes and sealants",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0052",
+    "name": "Construction adhesive",
+    "category": "Finishes and sealants",
+    "unit": "tube",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0053",
+    "name": "Neutral cure silicone",
+    "category": "Finishes and sealants",
+    "unit": "tube",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0054",
+    "name": "Polyurethane sealant",
+    "category": "Finishes and sealants",
+    "unit": "tube",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0055",
+    "name": "Primer paint",
+    "category": "Finishes and sealants",
+    "unit": "L",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0056",
+    "name": "Waterproofing membrane",
+    "category": "Finishes and sealants",
+    "unit": "L",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0057",
+    "name": "Nitrile gloves",
+    "category": "Safety and consumables",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0058",
+    "name": "Cut resistant gloves",
+    "category": "Safety and consumables",
+    "unit": "pair",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0059",
+    "name": "Safety glasses",
+    "category": "Safety and consumables",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0060",
+    "name": "P2 respirators",
+    "category": "Safety and consumables",
+    "unit": "box",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0061",
+    "name": "Earplugs",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0062",
+    "name": "High visibility vest",
+    "category": "Safety and consumables",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0063",
+    "name": "Barrier tape",
+    "category": "Safety and consumables",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0064",
+    "name": "First aid refill",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0065",
+    "name": "Dust sheets",
+    "category": "Safety and consumables",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0066",
+    "name": "Rubbish bags heavy duty",
+    "category": "Safety and consumables",
+    "unit": "roll",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0067",
+    "name": "Cleaning wipes",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0068",
+    "name": "Absorbent spill pads",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0069",
+    "name": "Diamond cutting disc",
+    "category": "Safety and consumables",
+    "unit": "pcs",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0070",
+    "name": "Drill bits masonry",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0071",
+    "name": "Sandpaper 120 grit",
+    "category": "Safety and consumables",
+    "unit": "pack",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  },
+  {
+    "sku": "STK-0072",
+    "name": "Marking paint",
+    "category": "Safety and consumables",
+    "unit": "can",
+    "barcode": "",
+    "openingQuantity": 0,
+    "reorderLevel": 0
+  }
+]

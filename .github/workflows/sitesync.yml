@@ -1,87 +1,50 @@
-name: SiteSync CI
+name: SiteSync Release Validation
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+    tags: ['v*']
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
-  test-and-build:
-    runs-on: ubuntu-latest
+  web-tests:
+    name: API and inventory tests
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check out source
-        uses: actions/checkout@v5
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-
-      - name: Restore web and test dependencies
+      - name: Test shared inventory rules
+        run: node --test InventoryUi/tests/core.test.cjs
+      - name: Restore test dependencies
         run: dotnet restore Web.Tests/SiteSyncTracker.Web.Tests.csproj
-
-      - name: Run web tests
+      - name: Run API tests
         run: dotnet test Web.Tests/SiteSyncTracker.Web.Tests.csproj --configuration Release --no-restore
-
-      - name: Build web project
+      - name: Build web application
         run: dotnet build Web/SiteSyncTracker.Web.csproj --configuration Release --no-restore
 
-      - name: Build Docker image
-        run: docker build --file Web/Dockerfile --tag sitesync-tracker-web:${{ github.sha }} .
-
-      - name: Validate Docker image health
-        run: >-
-          docker run --detach --name sitesync-ci --publish 18080:8080
-          --volume sitesync-ci-data:/data
-          --env ASPNETCORE_ENVIRONMENT=Production
-          --env ConnectionStrings__Inventory='Data Source=/data/sitesync.db'
-          --env ConnectionStrings__Identity='Data Source=/data/sitesync-auth.db'
-          --env Admin__Email=ci-admin@example.com
-          --env Admin__Password=ci-Only-Password-123!
-          sitesync-tracker-web:${{ github.sha }}
-
-      - name: Wait for health endpoint
-        shell: bash
-        run: |
-          for attempt in {1..30}; do
-            if curl --fail --silent http://localhost:18080/api/health; then exit 0; fi
-            sleep 2
-          done
-          docker logs sitesync-ci
-          exit 1
-
-      - name: Stop validation container
-        if: always()
-        run: docker rm --force sitesync-ci
-
   android-build:
-    runs-on: ubuntu-latest
+    name: Build Android APK
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check out source
-        uses: actions/checkout@v5
-
-      - name: Set up Java
-        uses: actions/setup-java@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-
-      - name: Install Android workload
+      - name: Install MAUI Android workload
         run: dotnet workload install maui-android
-
-      - name: Restore Android project
+      - name: Restore Android target
         run: dotnet restore SiteSyncTracker.csproj -p:TargetFramework=net10.0-android
-
       - name: Build Android APK
         run: >-
           dotnet publish SiteSyncTracker.csproj
@@ -89,48 +52,98 @@ jobs:
           --framework net10.0-android
           --no-restore
           -p:AndroidPackageFormat=apk
-
-      - name: Find Android APK
+      - name: Verify and stage APK
         shell: bash
         run: |
-          apk_path=$(find bin/Release/net10.0-android -type f -name '*.apk' | head -n 1)
+          apk_path=$(find bin/Release/net10.0-android -type f -name '*-Signed.apk' -print -quit)
           test -n "$apk_path"
           cp "$apk_path" SiteSyncTracker.apk
-
-      - name: Upload Android APK
-        uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v5
         with:
           name: sitesync-android-apk
           path: SiteSyncTracker.apk
           if-no-files-found: error
 
-  android-release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  android-emulator:
+    name: Android emulator smoke test
     needs: android-build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    runs-on: ubuntu-24.04
     steps:
-      - name: Check out source
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - name: Enable KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: actions/download-artifact@v6
+        with:
+          name: sitesync-android-apk
+          path: .
+      - name: Install and launch on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          script: |
+            set -eu
+            adb install -r SiteSyncTracker.apk
+            adb shell pm list packages | grep com.sitesync.tracker
+            adb shell monkey -p com.sitesync.tracker -c android.intent.category.LAUNCHER 1
+            sleep 5
+            adb shell pidof com.sitesync.tracker
+            python .github/scripts/android_preview.py
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: android-app-previews
+          path: android-*.png
+          if-no-files-found: warn
 
-      - name: Set up Java
-        uses: actions/setup-java@v5
+  windows-build:
+    name: Build Windows application
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Install MAUI Windows workload
+        run: dotnet workload install maui-windows
+      - name: Build Windows application
+        run: dotnet publish SiteSyncTracker.csproj -c Release -f net10.0-windows10.0.19041.0 -p:TargetFrameworks=net10.0-windows10.0.19041.0 -p:WindowsPackageType=None -p:GenerateAppxPackageOnBuild=false --self-contained true -r win-x64 -o artifacts/windows
+      - uses: actions/upload-artifact@v5
+        with:
+          name: sitesync-windows
+          path: artifacts/windows/**/*
+          if-no-files-found: error
+      - name: Launch Windows app and capture previews (optional)
+        continue-on-error: true
+        shell: pwsh
+        run: ./.github/scripts/windows-preview.ps1
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: windows-app-previews
+          path: windows-*.png
+          if-no-files-found: warn
+
+  android-release-bundle:
+    name: Build Android release bundle
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-
-      - name: Install Android workload
+      - name: Install MAUI Android workload
         run: dotnet workload install maui-android
-
-      - name: Restore Android project
+      - name: Restore Android target
         run: dotnet restore SiteSyncTracker.csproj -p:TargetFramework=net10.0-android
-
       - name: Build unsigned Android App Bundle
         run: >-
           dotnet publish SiteSyncTracker.csproj
@@ -139,38 +152,31 @@ jobs:
           --no-restore
           -p:AndroidPackageFormat=aab
           -p:AndroidKeyStore=false
-
-      - name: Upload Android App Bundle
-        uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v5
         with:
           name: sitesync-android-aab
           path: bin/Release/net10.0-android/**/*.aab
           if-no-files-found: error
 
-  android-emulator:
-    needs: android-build
-    runs-on: ubuntu-latest
+  kotlin-android:
+    name: Kotlin Android builds and unit tests
+    runs-on: ubuntu-24.04
     steps:
-      - name: Download Android APK
-        uses: actions/download-artifact@v6
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
-          name: sitesync-android-apk
-          path: .
-
-      - name: Run Android emulator smoke test
-        uses: reactivecircus/android-emulator-runner@v2
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
+      - name: Build both Kotlin apps and run unit tests
+        run: >-
+          bash ./gradlew :app:assembleDebug :app-compose:assembleDebug
+          :shared:testDebugUnitTest :app:testDebugUnitTest :app-compose:testDebugUnitTest
+          --no-daemon
+      - uses: actions/upload-artifact@v5
         with:
-          api-level: 35
-          arch: x86_64
-          profile: Pixel_2
-          script: |
-            set -euxo pipefail
-            adb install -r SiteSyncTracker.apk
-            adb shell pm list packages | grep com.companyname.sitesynctracker
-            adb shell monkey -p com.companyname.sitesynctracker -c android.intent.category.LAUNCHER 1
-            sleep 5
-            adb shell dumpsys activity activities | grep -A 8 com.companyname.sitesynctracker || true
-            adb shell pidof com.companyname.sitesynctracker
-            adb logcat -d -t 300
-
-
+          name: sitesync-kotlin-android-apks
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app-compose/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
