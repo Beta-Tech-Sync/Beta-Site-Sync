@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      sign_android_bundle:
+        description: Sign the bundle for Google Play using the upload key
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -129,7 +134,6 @@ jobs:
 
   android-release-bundle:
     name: Build Android release bundle
-    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
@@ -150,12 +154,53 @@ jobs:
           --configuration Release
           --framework net10.0-android
           --no-restore
-          -p:AndroidPackageFormat=aab
+          -p:AndroidPackageFormats=aab
           -p:AndroidKeyStore=false
+      - name: Stage the unsigned bundle
+        run: |
+          cp bin/Release/net10.0-android/publish/com.sitesync.tracker.aab SiteSyncTracker-unsigned.aab
       - uses: actions/upload-artifact@v5
         with:
-          name: sitesync-android-aab
-          path: bin/Release/net10.0-android/**/*.aab
+          name: sitesync-android-aab-unsigned
+          path: SiteSyncTracker-unsigned.aab
+          if-no-files-found: error
+
+  android-play-signing:
+    name: Sign Android bundle for Google Play
+    if: github.event_name == 'workflow_dispatch' && inputs.sign_android_bundle && startsWith(github.ref, 'refs/tags/v')
+    needs: [web-tests, android-emulator, android-release-bundle]
+    runs-on: ubuntu-24.04
+    environment: google-play
+    steps:
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v6
+        with:
+          name: sitesync-android-aab-unsigned
+      - name: Sign the bundle using the Play upload key
+        env:
+          UPLOAD_KEYSTORE: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}
+          UPLOAD_PASSWORD: ${{ secrets.ANDROID_UPLOAD_KEYSTORE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$UPLOAD_KEYSTORE" || -z "$UPLOAD_PASSWORD" ]]; then
+            echo "::error::Set the Android signing secrets in the google-play environment."
+            exit 1
+          fi
+          umask 077
+          keystore=$(mktemp)
+          trap 'rm -f "$keystore"' EXIT
+          printf '%s' "$UPLOAD_KEYSTORE" | base64 --decode > "$keystore"
+          unset UPLOAD_KEYSTORE
+          jarsigner -keystore "$keystore" -storetype PKCS12 -storepass:env UPLOAD_PASSWORD \
+            -signedjar SiteSyncTracker-Play.aab SiteSyncTracker-unsigned.aab sitesync-upload
+          jarsigner -verify SiteSyncTracker-Play.aab
+      - uses: actions/upload-artifact@v5
+        with:
+          name: sitesync-android-aab-play-signed
+          path: SiteSyncTracker-Play.aab
           if-no-files-found: error
 
   kotlin-android:
@@ -180,3 +225,46 @@ jobs:
             app/build/outputs/apk/debug/*.apk
             app-compose/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+  draft-beta-release:
+    name: Stage Android and Windows beta downloads
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [web-tests, android-emulator, windows-build, android-release-bundle]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    concurrency:
+      group: sitesync-draft-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v6
+        with:
+          name: sitesync-android-apk
+          path: release
+      - uses: actions/download-artifact@v6
+        with:
+          name: sitesync-windows
+          path: windows
+      - name: Package Windows x64 beta
+        run: |
+          test -f windows/SiteSyncTracker.exe
+          cd windows
+          zip -q -r ../release/SiteSyncTracker-Windows-x64.zip .
+      - name: Stage downloads in a draft prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --verify-tag \
+              --draft --prerelease --title "SiteSync Tracker $tag beta" \
+              --notes "Android APK for sideload testing. Extract the Windows x64 ZIP and run SiteSyncTracker.exe."
+          fi
+          release_json=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft,assets)
+          jq -e '.isDraft' <<< "$release_json" >/dev/null
+          for asset in release/*; do
+            if ! jq -e --arg name "${asset##*/}" '.assets | any(.name == $name)' <<< "$release_json" >/dev/null; then
+              gh release upload "$tag" "$asset" --repo "$GITHUB_REPOSITORY"
+            fi
+          done
